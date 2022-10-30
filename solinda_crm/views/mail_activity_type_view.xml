@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="mail_activity_type_view_form_inherit_mail" model="ir.ui.view">
+        <field name="name">mail.activity.type.view.form.inherit</field>
+        <field name="model">mail.activity.type</field>
+        <field name="inherit_id" ref="mail.mail_activity_type_view_form"/>
+        <field name="arch" type="xml">
+
+            <group name="activity_details" position="inside">
+                <!-- kodingan untuk odoo enterprise -->
+                <field name="progress" widget="percentage" attrs="{'invisible':[('res_model','!=','crm.lead')]}" />
+
+                <!-- kodingan untuk odoo community -->
+                <!-- <field name="progress" widget="percentage" /> -->
+            </group>
+
+        </field>
+    </record>
+
+
+    <!-- <record id="mail_activity_type_view_tree_inherit_mail" model="ir.ui.view">
+        <field name="name">mail.activity.type.view.form.inherit</field>
+        <field name="model">mail.activity.type</field>
+        <field name="inherit_id" ref="mail.mail_activity_type_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="summary" position="after">
+                <field name="progress" widget="percentage" />
+            </field>
+
+        </field>
+    </record> -->
+
+</odoo>

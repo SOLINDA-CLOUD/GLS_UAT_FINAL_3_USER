@@ -1,0 +1,252 @@
+<odoo>
+  <data>
+
+    <record id="crm_case_tree_view_oppor_inherit_crm" model="ir.ui.view">
+      <field name="name">crm.lead.view.tree.inherit</field>
+      <field name="model">crm.lead</field>
+      <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='stage_id']" position="after">
+          <!-- Add your fields here -->
+          <field name="change_stage_time" widget="remaining_days"/>
+          <field name="duration_change_stage" invisible="1"/>
+        </xpath>
+
+      </field>
+    </record>
+
+    <record id="crm_case_kanban_view_leads_inherit_crm" model="ir.ui.view">
+      <field name="name">crm.lead.view.form.inherit</field>
+      <field name="model">crm.lead</field>
+      <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+      <field name="arch" type="xml">
+        <xpath expr="//div[hasclass('oe_kanban_content')]" position="inside">
+          <div>
+              Probability : 
+            <t t-if="record.probability.raw_value == 100.0">
+              <span class="text-success">
+                <field name="probability" />
+              </span>
+
+            </t>
+            <t t-else="">
+              <field name="probability"/>
+            </t>
+          </div>
+          <div>
+              Duration : 
+            <field name="change_stage_time" widget="remaining_days" force_save="1"/>
+          </div>
+        </xpath>
+      </field>
+    </record>
+
+
+    <record id="crm_lead_view_form_inherit_crm" model="ir.ui.view">
+      <field name="name">crm.lead.view.form.inherit</field>
+      <field name="model">crm.lead</field>
+      <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//button[@name=%(crm.action_crm_lead2opportunity_partner)d]" position="attributes">
+          <attribute name="groups">solinda_crm.group_crm_manager</attribute>
+          <attribute name="attrs">{'invisible': [('type', '=', 'opportunity')]}</attribute>
+        </xpath>
+        <xpath expr="//button[@name='action_set_won_rainbowman']" position="attributes">
+          <attribute name="groups">solinda_crm.group_crm_manager</attribute>
+        </xpath>
+        <xpath expr="//button[@name=%(crm.crm_lead_lost_action)d]" position="attributes">
+          <attribute name="attrs">{}</attribute>
+          <attribute name="groups">solinda_crm.group_crm_manager</attribute>
+        </xpath>
+        <xpath expr="//button[@name='action_set_lost']" position="attributes">
+          <attribute name="invisible">1</attribute>
+          <attribute name="groups">solinda_crm.group_crm_manager</attribute>
+        </xpath>
+        <xpath expr="//field[@name='date_deadline']" position="attributes">
+          <attribute name="attrs">{'required':[('type', '=', 'opportunity')]}</attribute>
+        </xpath>
+        <xpath expr="//notebook" position="inside">
+          <page string="Kuesioner">
+            <group string="Type of business">
+              <field name="business_type_id" />
+            </group>
+            <group string="Plant Overview">
+              <field name="project_name" />
+              <field name="country_id" />
+              <field name="plant_type_id" />
+              <field name="plant_start_date" />
+            </group>
+            <group string="Reason for installing water/wastewater system">
+              <field name="new_installation" />
+              <field name="req_new_ids" widget="many2many_tags"/>
+              <field name="refubrishment" />
+              <field name="req_refubrish_ids" widget="many2many_tags" />
+              <field name="is_further_process" />
+              <field name="treatment_process" />
+            </group>
+            <group string="Water Source Conditions">
+              <field name="ground_water" />
+              <field name="surface_water" widget="radio" options="{'horizontal':True}" />
+              <field name="seawater" widget="radio" options="{'horizontal':True}" />
+              <field name="waste_water_treatment" widget="radio" options="{'horizontal':True}"/>
+              <field name="industrial_detail_id" />
+              <field name="distance_from_rawwater" />
+              <field name="elevation_from_rawwater" />
+            </group>
+            <group string="Requested design capacity and pre-treatment">
+              <field name="average_capacity" />
+              <field name="full_capacity" />
+              <field name="peak_conditions" />
+              <field name="frequency" />
+              <field name="day_week" />
+              <field name="required_capacity_hr" />
+              <field name="required_capacity_d" />
+              <field name="min_temperature" />
+              <field name="max_temperature" />
+              <field name="required_recovery" />
+              <field name="prescreening_ids" mode="tree,kanban">
+                <tree string="Pre-Screening" editable="top">
+                  <field name="name" />
+                  <field name="pre_type" />
+                  <field name="opening" />
+                  <field name="no_bypass" />
+                  <field name="no_overflow" />
+                </tree>
+              </field>
+              <field name="is_coagulant" />
+              <field name="coagulant_type_id" />
+              <field name="advanced_treatments" widget="many2many_tags"/>
+              <field name="operation_conditions" widget="many2many_tags"/>
+            </group>
+            <group string="Post-treatment process(es)">
+              <field name="ro" />
+              <field name="chlorination" />
+              <field name="post_treatment_other" />
+            </group>
+            <group string="Maintenance">
+              <field name="sodium" />
+              <field name="oxalic" />
+              <field name="plant_operation" />
+              <field name="plant_reduced_capacity" />
+            </group>
+            <group string="Treated Water/Wastewater Quality">
+              <field name="treated_quality_ids" nolabel="1">
+                <tree string="Treated Water/Wastewater Quality" editable="bottom">
+                  <field name="name" />
+                  <field name="effluent_standards" />
+                  <field name="target_value" />
+                  <field name="uom" />
+                </tree>
+              </field>
+            </group>
+            <group string="Site Conditions">
+              <field name="length_treatment_plant" />
+              <field name="width_treatment_plant" />
+              <field name="height_treatment_plant" />
+              <field name="gradient_treatment_plant" />
+              <field name="wind_load" />
+              <field name="specific_governmental" />
+              <field name="specific_material" />
+              <field name="any_data_available" />
+              <field name="flange_type" />
+              <field name="is_seasonal_deviations" />
+              <field name="is_height_limitation" />
+              <field name="is_area_limitation" />
+              <field name="is_limitation_to_transport_tanks" />
+              <field name="transport_id" />
+            </group>
+            <group string="Electrical Condition On Location">
+              <field name="voltage" />
+              <field name="frequency" />
+              <field name="available_power" />
+              <field name="power" />
+              <field name="source_power" />
+            </group>
+          </page>
+          <page string="Raw water/wastewater Characterizations">
+            <group string="No need to fill if the client can send/attach the lab analysis report">
+              <field name="water_characterizations_ids" mode="tree,kanban" nolabel="1">
+                <tree string="Raw water/wastewater Characterizations" editable="bottom">
+                  <field name="parameter" />
+                  <field name="unit" />
+                  <field name="value" />
+                  <field name="remarks" />
+                </tree>
+              </field>
+            </group>
+          </page>
+          <page string="Existing Chemical Usage On Location">
+            <group string="Existing Chemical Usage On Location">
+              <field name="existing_chemical_ids" mode="tree,kanban" nolabel="1">
+                <tree string="Existing Chemical Usage On Location" editable="bottom">
+                  <field name="parameters" />
+                  <field name="average_daily" />
+                  <field name="min_daily" />
+                  <field name="max_daily" />
+                  <field name="remarks" />
+                </tree>
+              </field>
+            </group>
+          </page>
+          <page string="Description of the Area">
+            <group>
+              <field name="description_area" colspan="4" nolabel="1"/>
+              <field name="is_attachment" />
+              <field name="attachment_area" widget="image" attrs="{'invisible':[('is_attachment','=',False)]}" nolabel="1" colspan="4"/>
+            </group>
+          </page>
+          <page string="Description of the Existing Water/Wastewater Treatment, If Any">
+            <group>
+              <field name="description_existing" colspan="4" nolabel="1"/>
+              <field name="is_attachment_existing" />
+              <field name="attachment_area_existing" widget="image" attrs="{'invisible':[('is_attachment','=',False)]}" nolabel="1" colspan="4"/>
+            </group>
+          </page>
+          <page string="Additional Remarks or Documentations">
+            <group string="Additional Remarks or Documentations (Pictures, Sketches)">
+              <field name="description_remarks" nolabel="1" colspan="4"/>
+              <field name="attachment_remarks" />
+              <field name="change_stage_time" force_save="1" invisible="1"/>
+
+            </group>
+          </page>
+          <page string="CNA Report">
+            <group string="General Details">
+              <field name="facility_name" />
+              <field name="owning_company" />
+              <field name="address" />
+              <field name="contact_person" />
+              <field name="telephone" />
+              <field name="email" />
+            </group>
+            <group string="Type of Business">
+              <field name="business_type_cna" />
+            </group>
+            <group string="Client Category">
+              <field name="client_category" />
+            </group>
+            <group string="Project Status">
+              <field name="project_status" />
+            </group>
+            <group string="Project Scheme">
+              <field name="project_scheme" />
+            </group>
+            <group string="Timeline">
+              <field name="proposal_submission" />
+              <field name="construction_period" />
+            </group>
+            <group string="Budget/Price Limitation">
+              <field name="budget_limitation" />
+            </group>
+            <group string="Competitors">
+              <field name="competitors" />
+            </group>
+            <group string="Other Issue/Other Concern">
+              <field name="other_issue" />
+            </group>
+          </page>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

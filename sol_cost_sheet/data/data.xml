@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="activity_typerab_cos_sheet" model="mail.activity.type">
+            <field name="name">RAB / Cost Sheet</field>
+            <field name="category">default</field>
+            <field name="res_model">crm.lead</field>
+        </record>
+
+    </data>
+</odoo>

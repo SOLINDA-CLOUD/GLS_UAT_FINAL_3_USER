@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sale_order_view_form_inherit_sale" model="ir.ui.view">
+        <field name="name">sale.order.view.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page/group/group[@name='sale_shipping']" position="inside">
+                <field name="courier" />
+                <field name="fob" />
+                <field name="estimated_freight" />
+                <field name="ship_to" />
+                <field name="ship_address" />
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Quotation OMS">
+                    <group string="Other Information">
+                        <field name="subject" />
+                        <field name="items_oms" />
+                        <field name="attn_id" />
+                        <field name="email" />
+                        <field name="supervisor" />
+                        <field name="office" />
+                    </group>
+                </page>
+                <page name="terms_conditions" string="Terms and Conditions">
+                    <group name="terms_conditions" string="Terms and Conditions">
+                        <field name="quotation_validity" required="1"/>
+                        <field name="delivery_time" required="1"/>
+                        <field name="delivery_point" required="1"/>
+                        <field name="price_tnc" required="1"/>
+                        <field name="payment_terms" required="1"/>
+                        <field name="revitalization_period" required="1"/>
+                    </group>
+                </page>
+                <page string="Quotation BOO">
+                    <group>
+                        <field name="attn_id" />
+                        <field name="periode" />
+                    </group>
+                    <group string="Supports">
+                        <field name="supervisor_boo" />
+                        <field name="engineer" />
+                        <field name="office_boo" />
+                        <field name="operator" />
+                    </group>
+                    <group string="Responsibility">
+                        <field name="president_director" />
+                        <field name="director" />
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

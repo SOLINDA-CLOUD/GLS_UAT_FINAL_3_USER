@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record id="rap_report_view_form" model="ir.ui.view">
+            <field name="name">rap.report.wizard.view.form</field>
+            <field name="model">rap.report.wizard</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <field name="project_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                            <field name="name" invisible="1"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="Generate" name="download_xlsx_report" type="object" class="oe_highlight"/>
+                        <button string="Cancel" special="cancel" type="object"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="rap_report_wizard_action" model="ir.actions.act_window">
+            <field name="name">RAP</field>
+            <field name="res_model">rap.report.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+
+
+</odoo>

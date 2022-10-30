@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+
+        <record id="trouble_master_1" model="trouble.master">
+            <field name="name">Off karena GWT hotel penuh.</field>
+            <field name="type">trouble</field>
+            <field name="is_trouble">False</field>
+        </record>
+
+        <record id="trouble_master_2" model="trouble.master">
+            <field name="name">Off karena aktivitas backwash.</field>
+            <field name="type">backwash</field>
+            <field name="is_trouble">False</field>
+        </record>
+
+        <record id="trouble_master_3" model="trouble.master">
+            <field name="name">Off karena aktivitas Cleaning Membrane.</field>
+            <field name="type">cleaning</field>
+            <field name="is_trouble">False</field>
+        </record>
+
+        <record id="trouble_master_7" model="trouble.master">
+            <field name="name">Off karena aktivitas Penggunaan Grease Pompa.</field>
+            <field name="type">grease</field>
+            <field name="is_trouble">False</field>
+        </record>
+
+        <record id="trouble_master_4" model="trouble.master">
+            <field name="name">Off karena trouble system.</field>
+            <field name="type">trouble</field>
+            <field name="is_trouble">True</field>
+        </record>
+
+        <record id="trouble_master_5" model="trouble.master">
+            <field name="name">Off karena maintenance.</field>
+            <field name="type">trouble</field>
+            <field name="is_trouble">True</field>
+        </record>
+
+        <record id="trouble_master_6" model="trouble.master">
+            <field name="name">Off karena lainnya.</field>
+            <field name="type">trouble</field>
+            <field name="is_trouble">True</field>
+        </record>
+    </data>
+
+
+</odoo>

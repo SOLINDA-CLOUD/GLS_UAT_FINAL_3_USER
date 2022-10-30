@@ -1,0 +1,309 @@
+<odoo>
+  <data>
+    <record id="cost_sheet_view_tree" model="ir.ui.view">
+      <field name="name">cost.sheet.view.tree</field>
+      <field name="model">cost.sheet</field>
+      <field name="arch" type="xml">
+        <tree string="">
+          <field name="name" />
+          <field name="crm_id" />
+          <field name="date_document"/>
+          <field name="user_id"/>
+          <field name="partner_id" />
+          <field name="state" />
+        </tree>
+      </field>
+    </record>
+
+    <record id="cost_sheet_view_form" model="ir.ui.view">
+      <field name="name">cost.sheet.view.form</field>
+      <field name="model">cost.sheet</field>
+      <field name="arch" type="xml">
+        <form string="">
+          <header>
+            <button string="Submit" name="action_submit" states="draft" type="object" class="oe_highlight"/>
+            <button string="Approve" name="action_done" states="submit" type="object" class="oe_highlight" groups="sol_cost_sheet.group_approve_cos_sheet"/>
+            <button string="Reject" name="action_reject" states="approved" type="object" class="oe_highlight"/>
+            <button string="Set to Draft" name="action_to_draft" states="done" type="object"/>
+
+            <button string="Print Quotation Trading" name="action_print_quotation_trading" states="approved" type="object"/>
+            <button string="Print Quotation Turnkey" name="action_print_quotation" states="approved" type="object"/>
+            <button string="Create Revision" name="create_revision" states="approved" type="object"/>
+            <field name="state" widget="statusbar" statusbar_visible="draft,submit,approved" />
+          </header>
+          <sheet>
+            <div class="oe_button_box" name="button_box">
+              <button name="action_view_crm" type="object" string="CRM" class="oe_stat_button" icon="fa-handshake-o" attrs="{'invisible':[('state','=','draft')]}"/>
+            </div>
+            <div class="oe_title">
+              <h1>
+                <field name="name" readonly="1"/>
+              </h1>
+            </div>
+            <group col="4">
+              <!-- <field name="crm_id" />
+              <field name="partner_id" />
+              <field name="tax_id" /> -->
+              <field name="crm_id" attrs="{'readonly': [('state','!=','draft')]}" required="1" options="{'no_create':True,'no_quick_create':True}" />
+              <field name="partner_id" attrs="{'readonly': [('state','!=','draft')]}" options="{'no_create':True,'no_quick_create':True}" />
+              <!-- <field name="rab_template_id" /> -->
+              <field name="date_document" attrs="{'readonly': [('state','!=','draft')]}"/>
+              <field name="tax_id" options="{'no_create':True,'no_quick_create':True}" attrs="{'readonly': [('state','!=','draft')]}"/>
+              <field name="project_code" invisible="0" readonly="1"/>
+              <!-- <field name="tax_ids" widget="many2many_tags" /> -->
+              <field name="user_id" readonly="1" attrs="{'readonly': [('state','!=','draft')]}"/>
+              <field name="cost_sheet_revision_id" attrs="{'invisible':[('revisied','=',False)],'readonly': [('state','!=','draft')]}" />
+              <field name="rev" invisible="1" />
+              <field name="revisied" invisible="1" />
+
+
+            </group>
+            <notebook>
+              <page string="Category">
+                <field name="category_line_ids" attrs="{'readonly': [('state','!=','draft')]}">
+                  <tree editable="bottom">
+                    <field name="sequence" widget="handle"/>
+                    <field name="product_id" />
+                    <field name="price" />
+                    <field name="propotional" widget="percentage" sum="propotional" />
+                    <field name="suggested_proposional" />
+                    <field name="input_manual" optional="hide" />
+                    <field name="final_price" />
+                    <field name="final_price_percentage" widget="percentage" />
+                    <button name="action_view_detail" type="object" icon="fa-pencil-square-o" />
+                  </tree>
+                </field>
+                <group name="non_project" class="mb32">
+                  <group string="Non Project" col="2">
+
+                    <field name="ga_project" />
+                    <field name="project_hse" />
+                    <field name="car" />
+                    <field name="financial_cost" string="Financial Cost" attrs="{'readonly': [('state','!=','draft')]}"/>
+                    <field name="bank_guarantee" attrs="{'readonly': [('state','!=','draft')]}"/>
+                    <field name="contigency" attrs="{'readonly': [('state','!=','draft')]}"/>
+                    <field name="waranty" />
+                    <field name="other_price" attrs="{'readonly': [('state','!=','draft')]}"/>
+                  </group>
+                  <group col="1" string="Proportional %">
+
+                    <field name="ga_project_percent" widget="percentage" nolabel="1"/>
+                    <field name="project_hse_percent" widget="percentage" nolabel="1" attrs="{'readonly': [('state','!=','draft')]}"/>
+                    <field name="car_percent" widget="percentage" nolabel="1" attrs="{'readonly': [('state','!=','draft')]}"/>
+                    <field name="financial_cost_percent" widget="percentage" nolabel="1"/>
+                    <field name="bank_guarantee_percent" widget="percentage" nolabel="1"/>
+                    <field name="contigency_percent" widget="percentage" nolabel="1" attrs="{'readonly': [('state','!=','draft')]}"/>
+                    <field name="waranty_percent" widget="percentage" nolabel="1" attrs="{'readonly': [('state','!=','draft')]}"/>
+                  </group>
+
+                </group>
+                <group name="note_group" col="6" class="mt-2 mt-md-0">
+                  <group colspan="4">
+                    <field name="note" nolabel="1" placeholder="Terms and conditions..." attrs="{'readonly': [('state','!=','draft')]}"/>
+                  </group>
+                  <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                    <field name="currency_id" invisible="1" />
+                    <field name="subtotal" />
+                    <field name="subtotal_non_project" />
+                    <field name="project_value" />
+                    <field name="profit" />
+                    <field name="profit_propotional" widget="percentage" attrs="{'readonly': [('state','!=','draft')]}"/>
+                    <field name="sales" />
+                    <field name="offer_margin_percentage" widget="percentage" attrs="{'readonly': [('state','!=','draft')]}"/>
+                    <field name="offer_margin" />
+                    <field name="total_cost_with_margin" />
+                    <field name="total_cost_round_up" />
+                    <field name="pph" attrs="{'readonly': [('state','!=','draft')]}"/>
+                    <field name="pph_percent" widget="percentage" />
+                    <field name="final_profit" />
+                    <field name="final_profit_percent" widget="percentage" />
+                    <field name="taxes" />
+                    <!-- <field name="total_amount" /> -->
+                    <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                      <label for="total_amount"/>
+                    </div>
+                    <field name="total_amount" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                  </group>
+                  <div class="oe_clear"/>
+                </group>
+              </page>
+              <page string="Component" groups="base.group_no_one">
+                <field name="component_line_ids" attrs="{'readonly': [('state','!=','draft')]}">
+                  <tree>
+                    <field name="category_id" />
+                    <field name="product_id" />
+                  </tree>
+                  <form>
+                    <group>
+                      <field name="category_id" />
+                      <field name="product_id" />
+                    </group>
+                    <field name="item_ids"/>
+                  </form>
+                </field>
+              </page>
+              <page string="Items" groups="base.group_no_one">
+                <field name="item_line_ids" attrs="{'readonly': [('state','!=','draft')]}">
+                  <tree>
+                    <field name="category_id"/>
+                    <field name="product_id"/>
+                  </tree>
+                  <form>
+                    <group>
+                      <field name="category_id"/>
+                      <field name="product_id"/>
+                    </group>
+                  </form>
+                </field>
+              </page>
+
+              <page name="ga_project" string="GA Project">
+                <field name="ga_project_line_ids" attrs="{'readonly': [('state','!=','draft')]}">
+                  <tree editable="bottom">
+                    <field name="product_id" required="1" />
+                    <field name="product_qty" />
+                    <field name="product_uom" />
+                    <field name="product_uom_category_id" invisible="1" />
+                    <field name="existing_price" force_save="1" readonly="1"/>
+                    <field name="rfq_price" force_save="1"/>
+                    <field name="total_price" />
+                    <field name="remarks" />
+
+                  </tree>
+                </field>
+              </page>
+
+              <page name="waranty" string="Warranty">
+                <field name="waranty_line_ids" attrs="{'readonly': [('state','!=','draft')]}">
+                  <tree editable="bottom">
+                    <field name="product_id" required="1" />
+                    <field name="product_qty" />
+                    <field name="product_uom" />
+                    <field name="product_uom_category_id" invisible="1" />
+                    <field name="existing_price" force_save="1" readonly="1"/>
+                    <field name="rfq_price" force_save="1"/>
+                    <field name="total_price" />
+                    <field name="remarks" />
+                  </tree>
+                </field>
+              </page>
+
+              <page string="Additional Information">
+                <group string="Information">
+                  <field name="subject" attrs="{'readonly': [('state','!=','draft')]}"/>
+                  <field name="attn_id" attrs="{'readonly': [('state','!=','draft')]}"/>
+                  <field name="phone" />
+                  <field name="email" />
+                  <field name="ref_turnkey" />
+                  <field name="approved_by_id" readonly="1" force_save="1"/>
+                </group>
+                <group string="Terms And Conditions">
+                  <field name="quotation_validity" attrs="{'readonly': [('state','!=','draft')]}"/>
+                  <field name="delivery_time" attrs="{'readonly': [('state','!=','draft')]}"/>
+                  <field name="delivery_point" attrs="{'readonly': [('state','!=','draft')]}"/>
+                  <field name="toc_price" attrs="{'readonly': [('state','!=','draft')]}"/>
+                  <field name="payment_terms" attrs="{'readonly': [('state','!=','draft')]}"/>
+                </group>
+              </page>
+            </notebook>
+
+          </sheet>
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers"/>
+            <field name="activity_ids" widget="mail_activity"/>
+            <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+
+    <record id="cost_sheet_action" model="ir.actions.act_window">
+      <field name="name">Cost Sheet</field>
+      <field name="res_model">cost.sheet</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[]</field>
+      <field name="context">{}</field>
+      <field name="help" type="html">
+        <p>
+      Create a new Cost Sheet
+        </p>
+
+      </field>
+    </record>
+
+    <record id="component_component_view_form" model="ir.ui.view">
+      <field name="name">component.component.view.form</field>
+      <field name="model">component.component</field>
+      <field name="arch" type="xml">
+        <form string="">
+          <header>
+            <button string="Get Items" name="get_items_rab" type="object" class="oe_highlight"/>
+          </header>
+          <sheet>
+            <group>
+              <field name="cost_sheet_id" readonly="1" />
+              <field name="category_id" readonly="1" />
+              <field name="product_id" readonly="1" />
+            </group>
+            <field name="item_ids" context="{'default_category_id':parent.category_id,'default_cost_sheet_id':parent.cost_sheet_id}" widget="section_and_note_one2many">
+              <tree editable="bottom">
+                <control>
+                  <create name="add_product_control" string="Add a product"/>
+                  <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
+                  <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note'}"/>
+                </control>
+                <field name="sequence" widget="handle" />
+                <field name="display_type" invisible="1"/>
+                <field name="cost_sheet_id" readonly="1" force_save="1" invisible="1" />
+                <field name="category_id" readonly="1" force_save="1" invisible="1" />
+                <field name="product_id" attrs="{'required': [('display_type','=',False)]}" />
+                <field name="product_uom_category_id" invisible="1" />
+                <field name="name" widget="section_and_note_text" attrs="{'required': [('display_type','!=',False)]}"/>
+                <field name="uom_id" domain="[('category_id', '=', product_uom_category_id)]" />
+                <field name="product_qty" />
+                <field name="existing_price" force_save="1" readonly="1"/>
+                <field name="rfq_price" force_save="1"/>
+                <field name="total_price" />
+                <field name="remarks" />
+              </tree>
+            </field>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <!-- RAB Category -->
+
+    <record id="rab_category_view_form" model="ir.ui.view">
+      <field name="name">rab.category.view.form</field>
+      <field name="model">rab.category</field>
+      <field name="arch" type="xml">
+        <form string="" create="0">
+          <sheet>
+            <group>
+              <field name="cost_sheet_id" readonly="1" force_save="1" />
+              <field name="product_id" readonly="1" force_save="1" />
+              <field name="state_rab" invisible="1"/>
+            </group>
+            <field name="parent_component_line_ids" context="{'default_cost_sheet_id':parent.cost_sheet_id}" attrs="{'readonly': [('state_rab','!=','draft')]}">
+              <tree editable="bottom">
+                <field name="cost_sheet_id" readonly="1" force_save="1" />
+                <field name="product_id" />
+                <field name="product_qty" />
+                <field name="product_uom_category_id" invisible="1" />
+                <field name="uom_id" domain="[('category_id', '=', product_uom_category_id)]" />
+                <button name="action_view_items" type="object" icon="fa-pencil-square-o" />
+
+              </tree>
+            </field>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+
+  </data>
+</odoo>

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="1">
+    <record id="venndor_management_seq_id" model="ir.sequence">
+      <field name="name">Vendor Management Sequence</field>
+      <field name="code">vendor_managemnet_seq</field>
+      <field name="prefix">VM/%(year)s/</field>
+      <field eval="1" name="number_next"/>
+      <field eval="1" name="number_increment"/>
+      <field eval="False" name="use_date_range"/>
+      <field eval="False" name="company_id"/>
+      <field name="padding">5</field>
+    </record>
+  </data>
+  <data>
+    <record id="vendor_management_action" model="ir.actions.act_window">
+      <field name="name">Vendor Management</field>
+      <field name="res_model">vendor.management</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Vendor Management" id="vendor_management" parent="purchase.menu_procurement_management" 
+              action="vendor_management_action" sequence="14"/>
+
+    <record id="vendor_management_view_form" model="ir.ui.view">
+      <field name="name">Vendor Management Form</field>
+      <field name="model">vendor.management</field>
+      <field name="arch" type="xml">
+        <form>
+          <header>
+            <field name="state" widget="statusbar" statusbar_visible="draft,request,approved,rejected,cancelled"/>
+            <button name="draft_request" string="Request Approval" class="btn-primary" type="object"
+                    attrs="{'invisible': [('state', 'not in', ['draft'])]}"/>
+            <button name="request_draft" string="Back To Draft" class="btn-secondary" type="object"
+                    attrs="{'invisible': [('state', 'not in', ['request'])]}"/>
+            <button name="request_approved" string="Approve" class="btn-primary" type="object"
+                    attrs="{'invisible': ['|',('state', 'not in', ['request']),('is_manager','!=',True)]}"/>
+            <button name="request_rejected" string="Reject" class="btn-primary" type="object"
+                    attrs="{'invisible': ['|',('state', 'not in', ['request']),('is_manager','!=',True)]}"/>
+            <button name="approved_cancelled" string="Cancel" class="btn-secondary" type="object"
+                    attrs="{'invisible': ['|',('state', 'not in', ['approved']),('is_manager','!=',True)]}"/>
+          </header>
+          <sheet>
+            <group>
+              <div class="oe_title">
+                <h1>
+                    <field name="name" class="oe_inline oe_read_only" readonly="1" force_save="1"/>
+                </h1>
+              </div>
+            </group>
+            <group string="Vendor Information" attrs="{'readonly': [('state', 'not in', ['draft'])]}">
+                <group>
+                  <field name="vendor"/>
+                  <field name="email"/>
+                  <field name="business_name"/>
+                </group>
+                <group>
+                  <label for="period_start"/>
+                  <div class="o_row">
+                      <field name="period_start" placeholder="Start Period"/> -
+                      <field name="period_end" placeholder="End Period"/>
+                  </div>
+                  <field name="manager"/>
+                  <field name="date"/>
+                  <field name="is_manager" invisible="1"/>
+                  <field name="user_id" invisible="1"/>
+                </group>
+            </group>
+
+            <group string="Evaluation Item">
+                <label for="price_eval"/>
+                <div class="o_row">
+                  <field name="price_eval"/>
+                  <!-- <field name="price" widget="priority" attrs="{'invisible': [('price_eval','!=',True)]}"/> -->
+                  <label for="price_score" attrs="{'invisible': [('price_eval','!=',True)]}"/>
+                  <span><field name="price_score" attrs="{'invisible': [('price_eval','!=',True)]}" style="width: 25px;"/></span>
+                  <field name="price_comment" placeholder="Comments" attrs="{'invisible': [('price_eval','!=',True)]}"/>
+                </div>
+                <label for="terms_eval"/>
+                <div class="o_row">
+                  <field name="terms_eval"/>
+                  <!-- <field name="terms" widget="priority" attrs="{'invisible': [('terms_eval','!=',True)]}"/> -->
+                  <label for="terms_score" attrs="{'invisible': [('terms_eval','!=',True)]}"/>
+                  <span><field name="terms_score" attrs="{'invisible': [('terms_eval','!=',True)]}" style="width: 25px;"/></span>
+                  <field name="terms_comment" placeholder="Comments" attrs="{'invisible': [('terms_eval','!=',True)]}"/>
+                </div>
+                <label for="items_eval"/>
+                <div class="o_row">
+                  <field name="items_eval"/>
+                  <!-- <field name="items" widget="priority" attrs="{'invisible': [('items_eval','!=',True)]}"/> -->
+                  <label for="items_score" attrs="{'invisible': [('items_eval','!=',True)]}"/>
+                  <span><field name="items_score" attrs="{'invisible': [('items_eval','!=',True)]}" style="width: 25px;"/></span>
+                  <field name="items_comment" placeholder="Comments" attrs="{'invisible': [('items_eval','!=',True)]}"/>
+                </div>
+                <label for="accuracy_eval"/>
+                <div class="o_row">
+                  <field name="accuracy_eval"/>
+                  <!-- <field name="accuracy" widget="priority" attrs="{'invisible': [('accuracy_eval','!=',True)]}"/> -->
+                  <label for="accuracy_score" attrs="{'invisible': [('accuracy_eval','!=',True)]}"/>
+                  <span><field name="accuracy_score" attrs="{'invisible': [('accuracy_eval','!=',True)]}" style="width: 25px;"/></span>
+                  <field name="accuracy_comment" placeholder="Comments" attrs="{'invisible': [('accuracy_eval','!=',True)]}"/>
+                </div>
+                <label for="respon_eval"/>
+                <div class="o_row">
+                  <field name="respon_eval"/>
+                  <!-- <field name="respon" widget="priority" attrs="{'invisible': [('respon_eval','!=',True)]}"/> -->
+                  <label for="respon_score" attrs="{'invisible': [('respon_eval','!=',True)]}"/>
+                  <span><field name="respon_score" attrs="{'invisible': [('respon_eval','!=',True)]}" style="width: 25px;"/></span>
+                  <field name="respon_comment" placeholder="Comments" attrs="{'invisible': [('respon_eval','!=',True)]}"/>
+                </div>
+                <label for="complain_eval"/>
+                <div class="o_row">
+                  <field name="complain_eval"/>
+                  <!-- <field name="complain" widget="priority" attrs="{'invisible': [('complain_eval','!=',True)]}"/> -->
+                  <label for="complain_score" attrs="{'invisible': [('complain_eval','!=',True)]}"/>
+                  <span><field name="complain_score" attrs="{'invisible': [('complain_eval','!=',True)]}" style="width: 25px;"/></span>
+                  <field name="complain_comment" placeholder="Comments" attrs="{'invisible': [('complain_eval','!=',True)]}"/>
+                </div>
+                <label for="warranty_eval"/>
+                <div class="o_row">
+                  <field name="warranty_eval"/>
+                  <!-- <field name="warranty" widget="priority" attrs="{'invisible': [('warranty_eval','!=',True)]}"/> -->
+                  <label for="warranty_score" attrs="{'invisible': [('warranty_eval','!=',True)]}"/>
+                  <span><field name="warranty_score" attrs="{'invisible': [('warranty_eval','!=',True)]}" style="width: 25px;"/></span>
+                  <field name="warranty_comment" placeholder="Comments" attrs="{'invisible': [('warranty_eval','!=',True)]}"/>
+                </div>
+                
+                <div>
+                  <button name="calculate" type="object" string="CALCULATE" class="oe_stat_button"/>
+                </div>
+            </group>
+
+            <group string="Evaluation Report">
+              <field name="final_score" style="font-weight: bold;"/>
+              <field name="final_rate" widget="priority"/>
+              <field name="final_comment"/>
+            </group>
+
+          </sheet>
+          <div class="oe_chatter">
+              <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+              <field name="activity_ids" widget="mail_activity"/>
+              <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+    <record id="vendor_management_view_tree" model="ir.ui.view">
+      <field name="name">Vendor Management Tree</field>
+      <field name="model">vendor.management</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="date"/>
+          <field name="vendor"/>
+          <field name="business_name"/>
+          <field name="period_start" string="Period Start"/>
+          <field name="period_end"/>
+          <field name="final_score"/>
+          <field name="final_rate" widget="priority"/>
+          <field name="state"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="vendor_addition_management" model="ir.ui.view">
+      <field name="name">Vendor Addition Management Feature</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='vat']" position="after">
+          <field name="visible_management" widget="priority"/>
+          <field name="visible_management_cust" widget="priority"/>
+        </xpath>
+      </field>
+    </record>
+
+      
+
+
+  </data>
+</odoo>

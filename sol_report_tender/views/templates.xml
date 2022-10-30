@@ -1,0 +1,5 @@
+<odoo>
+  <data>
+    <report id="report_list_tender_excel" model="list.report.tender" string="Print Excel" report_type="xlsx" name="sol_report_tender.report_list_tender_excel" file="Tender List" attachment_use="False"/>
+  </data>
+</odoo>

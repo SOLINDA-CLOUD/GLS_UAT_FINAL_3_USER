@@ -1,0 +1,54 @@
+<odoo>
+    <data>
+
+        <record id="chemical_catr_view_search" model="ir.ui.view">
+            <field name="name">trouble.master.search</field>
+            <field name="model">trouble.master</field>
+            <field name="arch" type="xml">
+                <search string="Search Trouble Master">
+                    <field name="name" string="Location" filter_domain="[('name', 'ilike', self)]"/>
+                    <field name="type" string="Type"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Tree group-->
+        <record id="trouble_master_view_tree" model="ir.ui.view">
+            <field name="name">trouble.master.view.tree</field>
+            <field name="model">trouble.master</field>
+            <field name="arch" type="xml">
+                <tree string="Trouble Master" editable="top">
+                    <field name="name"/>
+                    <field name="type"/>
+                    <field name="is_trouble"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- === FORM AREA === -->
+        <record id="trouble_master_view_form" model="ir.ui.view">
+            <field name="name">trouble.master.view.form</field>
+            <field name="model">trouble.master</field>
+            <field name="arch" type="xml">
+                <form string="Trouble Master">
+                    <sheet>
+                        <group >
+                            <field name="name"/>
+                            <field name="type"/>
+                            <field name="is_trouble"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ACTION AREA -->
+        <record id="trouble_master_action" model="ir.actions.act_window">
+            <field name="name">Trouble Master</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">trouble.master</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

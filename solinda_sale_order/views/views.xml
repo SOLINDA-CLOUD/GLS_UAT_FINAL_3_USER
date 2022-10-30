@@ -1,0 +1,61 @@
+<odoo>
+  <data>
+
+    <record id="view_order_form_inherit_sale" model="ir.ui.view">
+      <field name="name">sale.order.view.form.inherit</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_form"/>
+      <field name="arch" type="xml">
+        <notebook position="inside">
+          <page name="payment_schedule" string="Payment Schedule">
+            <group>
+              <!-- <field name="deduct_dp" widget="boolean_toggle" class="oe_inline oe_edit_only" /> -->
+              <field name="payment_scheme" widget="radio" options="{'horizontal': true}" />
+            </group>
+            <field name="payment_schedule_line_ids">
+              <tree editable="bottom">
+                <!-- <field name="product_id" required="1" /> -->
+                <field name="name" required="1" />
+                <field name="payment_type" required="1" />
+                <field name="account_id" required="1" />
+                <field name="progress" widget="percentage" required="1" />
+                <field name="bill" widget="percentage" required="1" />
+                <field name="currency_id" invisible="1" />
+                <field name="percentage_based_on" />
+                <field name="include_project_cost" />
+                <field name="include_dp" />
+                <field name="deduct_dp" />
+                <field name="total_amount" />
+                <field name="move_id" readonly="1"/>
+                <button name="create_invoice" type="object" icon="fa-pencil-square-o" attrs="{'invisible':[('move_id','=',True)]}" />
+              </tree>
+            </field>
+            <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+              <!-- <field name="tax_totals_json" widget="account-tax-totals-field" nolabel="1" colspan="2"/> -->
+              <field name="amount_total" nolabel="1" colspan="2" />
+            </group>
+            <div class="oe_clear"/>
+          </page>
+        </notebook>
+        <field name="source_id" position="after">
+          <field name="attn_id" />
+        </field>
+        <field name="attn_id" position="after">
+          <field name="director_info" />
+        </field>
+        <xpath expr="//field[@name='analytic_account_id']" position="attributes">
+          <attribute name="required">1</attribute>
+        </xpath>
+        <xpath expr="//field[@name='tag_ids']" position="attributes">
+          <attribute name="required">1</attribute>
+        </xpath>
+        <xpath expr="//button[@id='action_confirm']" position="attributes">
+          <attribute name="groups">solinda_sale_order.group_sales_manager</attribute>
+        </xpath>
+        <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
+          <attribute name="groups">solinda_sale_order.group_sales_manager</attribute>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

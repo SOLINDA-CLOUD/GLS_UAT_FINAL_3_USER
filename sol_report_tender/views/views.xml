@@ -1,0 +1,76 @@
+<odoo>
+  <data>
+    <record id="list_purchase_order_action" model="ir.actions.server">
+      <field name="name">Convert to Report Excel</field>
+      <field name="type">ir.actions.server</field>
+      <field name="model_id" ref="sol_report_tender.model_purchase_order"/>
+      <field name="binding_model_id" ref="sol_report_tender.model_purchase_order"/>
+      <field name="state">code</field>
+      <field name="code">action = records.action_tolist_report_tender()</field>
+    </record>
+
+    <record id="list_report_tender_view_form" model="ir.ui.view">
+      <field name="name">list.report.tender.view.form</field>
+      <field name="model">list.report.tender</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <header>
+              <button string="Print XLSX" name="print_xlsx" type="object" class="oe_highlight"/>
+            </header>
+            <group string="Information">
+              <group>
+                <field name="create_date" readonly="1"/>
+                <field name="tax_id"/>
+                <label for="customs"/>
+                <div class="o_row" name="customs">
+                  <field name="customs" nolabel="1"/>
+                  <span>%</span>
+                </div>
+              </group>
+            </group>
+            <notebook>
+              <page string="Lists Tender">
+                <field name="purchase_order_ids" readonly="1">
+                  <tree>
+                    <field name="name" />
+                    <field name="date_approve" />
+                    <field name="partner_id" />
+                    <field name="date_planned" />
+                    <field name="user_id" />
+                    <field name="origin" />
+                    <field name="amount_total" />
+                    <field name="state" />
+                  </tree>
+                </field>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="purchase_order_form_inherit_sol_report_tender" model="ir.ui.view">
+      <field name="name">purchase.order.view.form.inherit</field>
+      <field name="model">purchase.order</field>
+      <field name="inherit_id" ref="purchase.purchase_order_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//page[@name='purchase_delivery_invoice']" position="after">
+          <page string="Additional Information">
+            <group>
+              <group string="Sewa CDD">
+                <field name="sewa_cdd_ket" />
+                <field name="sewa_cdd_harga" />
+              </group>
+              <group>
+                <field name="delivery_time" />
+                <field name="price" />
+              </group>
+            </group>
+          </page>
+        </xpath>
+      </field>
+    </record>
+
+  </data>
+</odoo>

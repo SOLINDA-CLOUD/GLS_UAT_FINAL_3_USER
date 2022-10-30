@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <record id="report_paperformat_a4_portrait_quotation_gls_turnkey" model="report.paperformat">
+            <field name="name">Paper Format Quotation GLS - Turnkey</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">19</field>
+            <field name="margin_left">15</field>
+            <field name="margin_right">10</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+
+
+        <record id="report_quotation_turnkey_action" model="ir.actions.report">
+            <field name="name">Quotation - Turnkey</field>
+            <field name="model">cost.sheet</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">sol_cost_sheet.report_quotation_turnkey</field>
+            <field name="report_file">sol_cost_sheet.report_quotation_turnkey</field>
+            <field name="paperformat_id" ref="sol_cost_sheet.report_paperformat_a4_portrait_quotation_gls_turnkey" />
+            <field name="print_report_name">'Turnkey - %s' % object.name</field>
+            <!-- <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="binding_type">report</field> -->
+        </record>
+
+        <record id="report_quotation_trading_action" model="ir.actions.report">
+            <field name="name">Quotation - Trading</field>
+            <field name="model">cost.sheet</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">sol_cost_sheet.report_quotation_trading</field>
+            <field name="report_file">sol_cost_sheet.report_quotation_trading</field>
+            <field name="paperformat_id" ref="sol_cost_sheet.report_paperformat_a4_portrait_quotation_gls_turnkey" />
+            <field name="print_report_name">'Trading - %s' % object.name</field>
+
+        </record>
+
+        <record id="export_rab_action" model="ir.actions.report">
+            <field name="name">Export RAB</field>
+            <field name="model">cost.sheet</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">sol_cost_sheet.report_cost_sheet_xlsx</field>
+            <field name="report_file">sol_cost_sheet.report_cost_sheet_xlsx</field>
+            <field name="print_report_name">'Export RAB - %s' % object.name</field>
+            <field name="binding_model_id" ref="sol_cost_sheet.model_cost_sheet"/>
+            <field name="binding_type">report</field>
+        </record>
+        <record id="export_rap_action" model="ir.actions.report">
+            <field name="name">Export RAP</field>
+            <field name="model">rap.rap</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">sol_cost_sheet.report_rap_xlsx</field>
+            <field name="report_file">sol_cost_sheet.report_rap_xlsx</field>
+            <field name="print_report_name">'Export RAP - %s' % object.name</field>
+            <field name="binding_model_id" ref="sol_cost_sheet.model_rap_rap"/>
+            <field name="binding_type">report</field>
+        </record>
+        <record id="action_rap_report" model="ir.actions.report">
+            <field name="name">RAP Report</field>
+            <field name="model">rap.report.wizard</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">sol_cost_sheet.rap_report_xlsx</field>
+            <field name="report_file">sol_cost_sheet.rap_report_xlsx</field>
+            <field name="print_report_name">'%s' % object.name</field>
+            <field name="binding_model_id" ref="sol_cost_sheet.model_rap_report_wizard"/>
+            <field name="binding_type">report</field>
+        </record>
+
+
+
+
+
+
+    </data>
+
+
+</odoo>

@@ -1,0 +1,138 @@
+<odoo>
+  <data>
+    <record id="purchase_view_form" model="ir.ui.view">
+      <field name="name">purchase.requisition.form</field>
+      <field name="model">purchase.requisition</field>
+      <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+      <field name="arch" type="xml">
+        <field name="currency_id" position="after">
+          <field name="name_project" />
+        </field>
+        <field name="name_project" position="after">
+          <field name="need_category" />
+        </field>
+        <xpath expr="//field[@name='line_ids']/tree/field[@name='schedule_date']" position="before">
+          <field name="price_target"/>
+        </xpath>
+        <xpath expr="//field[@name='line_ids']/tree/field[@name='price_target']" position="before">
+          <field name="merk_recommended"/>
+        </xpath>
+        <xpath expr="//field[@name='line_ids']/tree/field[@name='schedule_date']" position="after">
+          <field name="date_plan_required"/>
+        </xpath>
+        <xpath expr="//field[@name='line_ids']/tree/field[@name='date_plan_required']" position="after">
+          <field name="delivery_location_id"/>
+        </xpath>
+        <xpath expr="//field[@name='line_ids']/tree/field[@name='product_description_variants']" position="attributes">
+          <attribute name="attrs">{'readonly': [('parent.state', '=', False)]}</attribute>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="product_view_form" model="ir.ui.view">
+      <field name="name">product.product.form</field>
+      <field name="model">product.product</field>
+      <field name="inherit_id" ref="product.product_normal_form_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//notebook" position="inside">
+          <page string="Custom Description">
+            <group string="Custom Description">
+              <field name="type_pur" />
+              <field name="debit" />
+              <field name="head" />
+              <field name="voltage" />
+            </group>
+            <group string="Material">
+              <field name="casing" />
+              <field name="impeller" />
+            </group>
+          </page>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="product_template_view_form" model="ir.ui.view">
+      <field name="name">product.template.form</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_only_form_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//notebook" position="inside">
+          <page string="Custom Description">
+            <group string="Custom Description">
+              <field name="type_pur" />
+              <field name="debit" />
+              <field name="head" />
+              <field name="voltage" />
+            </group>
+            <group string="Material">
+              <field name="casing" />
+              <field name="impeller" />
+            </group>
+          </page>
+        </xpath>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="purchase_order_custom_form">
+      <field name="name">purchase.custom.order.form</field>
+      <field name="model">purchase.order</field>
+      <field name="inherit_id" ref="purchase.purchase_order_form" />
+      <field name="arch" type="xml">
+        <xpath expr="//div[@name='reminder']" position="after">
+          <field name="courier" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
+        </xpath>
+        <xpath expr="//field[@name='currency_id']" position="attributes">
+          <attribute name="readonly">1</attribute>
+          <attribute name="force_save">1</attribute>
+        </xpath>
+        <xpath expr="//field[@name='order_line']/tree/field[@name='taxes_id']" position="after">
+          <field name="project_code_po" optional="hide" invisible="1"/>
+        </xpath>
+        <xpath expr="//header" position="replace">
+          <header>
+            <button name="submit_purchase" type="object" class="oe_highlight" states="draft" string="Submit Order" groups="solinda_purchase.group_purchasing_staff_approval1"/>
+            <button name="confirm_purchase" type="object" class="oe_highlight" states="submit" string="Confirm Order" groups="solinda_purchase.group_procurement_manager_approval2"/>
+
+            <button name="button_confirm" type="object" class="oe_highlight" states="confirm" string="Approved Order" id="draft_confirm" groups="solinda_purchase.group_direksi_approval3"/>
+
+            <!-- <button name="button_confirm" type="object" states="draft" string="Confirm Order" id="draft_confirm" /> -->
+            <button name="action_rfq_send" states="draft" string="Send by Email" type="object" context="{'send_rfq':True}" class="oe_highlight" data-hotkey="g"/>
+            <button name="print_quotation" string="Print RFQ" type="object" states="draft" class="oe_highlight" groups="base.group_user" data-hotkey="k"/>
+            <!-- <button name="button_confirm" type="object" states="sent" string="Confirm Order" class="oe_highlight" id="bid_confirm" data-hotkey="v"/> -->
+            <button name="button_approve" type="object" states="to approve" string="Approve Order" class="oe_highlight" groups="purchase.group_purchase_manager" data-hotkey="z"/>
+            <button name="action_create_invoice" string="Create Bill" type="object" class="oe_highlight" context="{'create_bill':True}" attrs="{'invisible': ['|', ('state', 'not in', ('purchase', 'done')), ('invoice_status', 'in', ('no', 'invoiced'))]}" data-hotkey="w"/>
+            <button name="action_rfq_send" states="sent" string="Re-Send by Email" type="object" context="{'send_rfq':True}" data-hotkey="g"/>
+            <button name="print_quotation" string="Print RFQ" type="object" states="sent" groups="base.group_user" data-hotkey="k"/>
+            <button name="action_rfq_send" states="purchase" string="Send PO by Email" type="object" context="{'send_rfq':False}" data-hotkey="g"/>
+            <button name="confirm_reminder_mail" string="Confirm Receipt Date" type="object" attrs="{'invisible': ['|','|', ('state', 'not in', ('purchase', 'done')), ('mail_reminder_confirmed', '=', True), ('date_planned', '=', False)]}" groups="base.group_no_one" data-hotkey="o"/>
+            <button name="action_create_invoice" string="Create Bill" type="object" context="{'create_bill':True}" attrs="{'invisible': ['|', '|', ('state', 'not in', ('purchase', 'done')), ('invoice_status', 'not in', ('no', 'invoiced')), ('order_line', '=', [])]}" data-hotkey="w"/>
+            <button name="button_draft" states="cancel" string="Set to Draft" type="object" data-hotkey="o"/>
+            <button name="button_cancel" states="draft,to approve,sent,purchase" string="Cancel" type="object" data-hotkey="x"/>
+            <button name="button_done" type="object" string="Lock" states="purchase" data-hotkey="l"/>
+            <button name="button_unlock" type="object" string="Unlock" states="done" groups="purchase.group_purchase_manager" data-hotkey="l"/>
+            <field name="state" widget="statusbar" statusbar_visible="draft,submit,confirm,sent,purchase" readonly="1"/>
+          </header>
+        </xpath>
+
+      </field>
+    </record>
+
+    <record id="purchase_order_view_form_inherit_stock" model="ir.ui.view">
+      <field name="name">purchase.order.stock.view.form.inherit</field>
+      <field name="model">purchase.order</field>
+      <field name="inherit_id" ref="purchase_stock.purchase_order_view_form_inherit"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='picking_type_id']" position="after">
+          <field name="location_id" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="purchase_requisition.action_purchase_requisition" model="ir.actions.act_window">
+      <field name="name">Internal Request</field>
+    </record>
+
+    <menuitem name="Internal Request" id="menu_purchase_requisition_pro_mgt" sequence="1" parent="purchase.menu_procurement_management" action="purchase_requisition.action_purchase_requisition" />
+
+  </data>
+</odoo>

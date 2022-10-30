@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_vendor_management,sol_management.vendor_management,model_vendor_management,base.group_user,1,1,1,1
+access_customer_management,sol_management.customer_management,model_customer_management,base.group_user,1,1,1,1

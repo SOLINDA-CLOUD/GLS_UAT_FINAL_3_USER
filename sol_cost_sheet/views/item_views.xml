@@ -1,0 +1,100 @@
+<odoo>
+  <data>
+    <record id="item_item_view_search" model="ir.ui.view">
+      <field name="name">item.item.view.search</field>
+      <field name="model">item.item</field>
+      <field name="arch" type="xml">
+        <search string="">
+
+          <field name="product_id" filter_domain="['|','|',('product_id','ilike',self),('cost_sheet_id','ilike',self),('rap_id','ilike',self),('category_id','ilike',self),('component','ilike',self)]" />
+          <field name="cost_sheet_id" />
+          <field name="rap_id" />
+          <field name="category_id" />
+          <field name="component_id" />
+          <group expand="0" string="Group By">
+            <filter name="group_by_rap" string="RAP" context="{'group_by': 'rap_id'}" />
+            <filter name="group_by_rab" string="RAB" context="{'group_by': 'cost_sheet_id'}" />
+            <filter name="group_by_category" string="Category" context="{'group_by': 'category_id'}" />
+            <filter name="group_by_component" string="Component" context="{'group_by': 'component_id'}" />
+          </group>
+
+        </search>
+      </field>
+    </record>
+
+
+    <record id="costsheet_component_view_tree" model="ir.ui.view">
+      <field name="name">item.item.view.tree</field>
+      <field name="model">item.item</field>
+      <field name="arch" type="xml">
+        <tree string="" editable="bottom">
+          <field name="cost_sheet_id" colspan="4" />
+          <field name="product_id" />
+          <field name="category_id" />
+          <field name="component_id" />
+          <field name="product_qty" />
+          <field name="existing_price" />
+          <field name="rfq_price" />
+          <field name="total_price" />
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- View RAP Component -->
+
+    <record id="rap_component_view_tree" model="ir.ui.view">
+      <field name="name">rap.item.item.view.tree</field>
+      <field name="model">item.item</field>
+      <field name="arch" type="xml">
+        <tree editable="bottom" create="0" decoration-danger="data_type in ['edit','add']">
+          <field name="cost_sheet_id" invisible="1"/>
+          <field name="revisied" invisible="1" />
+          <field name="rap_id" readonly="1" />
+          <field name="product_id" readonly="1" />
+          <field name="uom_id" readonly="1" />
+          <field name="product_qty" readonly="1" />
+          <field name="category_id" readonly="1" />
+          <field name="component_id" readonly="1" />
+          <field name="qty_pr" />
+          <button name="view_item_in_pr_line" type="object" icon="fa-pencil-square-o" />
+          <field name="qty_po" />
+          <button name="view_item_in_po_line" type="object" icon="fa-pencil-square-o" />
+          <field name="qty_received" />
+          <field name="total_price" string="RAP Price" />
+          <field name="price_po" />
+          <button name="view_item_in_purchase" type="object" icon="fa-pencil-square-o" />
+          <field name="data_type" readonly="1" force_save="1" optional="hide" decoration-success="data_type == 'normal'" decoration-warning="data_type == 'edit'" decoration-danger="data_type == 'add'"/>
+          <field name="edited_field" optional="hide" readonly="1" force_save="1" invisible="1"/>
+          <field name="status_button" invisible="1"/>
+          <button class="btn btn-danger" name="status" type="object" icon="fa-arrow-circle-up" attrs="{'invisible': [('status_button','!=','down')]}"/>
+          <button class="btn btn-success" name="status" type="object" icon="fa-arrow-circle-down" attrs="{'invisible': [('status_button','!=','up')]}"/>
+          <button name="status" type="object" icon="fa-bars" attrs="{'invisible': [('status_button','!=','equal')]}"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="action_create_purchase_request" model="ir.actions.server">
+      <field name="name">Create Purchase Request</field>
+      <field name="type">ir.actions.server</field>
+      <field name="state">code</field>
+      <field name="code">action = records.create_purchase_request()</field>
+      <field name="binding_model_id" ref="model_item_item"/>
+      <field name="model_id" ref="model_item_item"/>
+    </record>
+
+
+    <record id="costsheet_component_action" model="ir.actions.act_window">
+      <field name="name">Cost Sheet Component</field>
+      <field name="res_model">item.item</field>
+      <field name="view_mode">tree</field>
+      <field name="domain">[]</field>
+      <field name="help" type="html">
+        <p>
+        Test
+        </p>
+      </field>
+    </record>
+
+  </data>
+</odoo>

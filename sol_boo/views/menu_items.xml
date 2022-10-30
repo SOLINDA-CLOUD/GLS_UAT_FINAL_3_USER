@@ -1,0 +1,33 @@
+<odoo>
+  <data>
+
+    <menuitem name="Operation BOO" id="sol_boo.root_operation_boo_oms" web_icon="sol_boo,static/description/boo.png"/>
+
+
+    <menuitem name="BOO" id="sol_boo.boo_menu" parent="sol_boo.root_operation_boo_oms"/>
+    <menuitem name="Water Production" action="sol_boo.water_prod_req_action" id="input_water_menu" groups="sol_boo.group_operator_user,base.group_system,sol_boo.group_busdev_boo_user" parent="sol_boo.root_operation_boo_oms" sequence="2"/>
+    <menuitem name="Chemical &amp; Catridge" action="sol_boo.chemical_catridge_req_action" groups="sol_boo.group_operator_user,base.group_system,sol_boo.group_busdev_boo_user" id="input_chemical_catridge_menu" parent="sol_boo.root_operation_boo_oms" sequence="4"/>
+    <menuitem name="Trouble System" action="sol_boo.shutdown_system_req_action" groups="sol_boo.group_operator_user,base.group_system,sol_boo.group_busdev_boo_user,sol_boo.group_spv_operator_user" id="shutdown_syetsme_menu" parent="sol_boo.root_operation_boo_oms" sequence="5"/>
+    <menuitem name="Job Order Request" action="sol_boo.job_order_req_action" groups="sol_boo.group_spv_operator_user,base.group_system,sol_boo.group_busdev_boo_user" id="job_order_request_menu" parent="sol_boo.root_operation_boo_oms" sequence="6"/>
+
+    <menuitem name="Reporting" id="sol_boo.reporting_boo_menu" groups="sol_boo.group_operator_user,base.group_system,sol_boo.group_busdev_boo_user" parent="sol_boo.root_operation_boo_oms" sequence="8"/>
+    <menuitem name="Generate Report" action="sol_boo.action_report_reporting_boo" id="geenrate_report_menu" parent="sol_boo.reporting_boo_menu" sequence="1"/>
+    <menuitem name="Water Production Report" action="sol_boo.water_prod_req_report_action" id="input_water_prod_report_menu" parent="sol_boo.reporting_boo_menu" sequence="2"/>
+    <menuitem name="Chemical &amp; Catridge Report" action="sol_boo.chemical_catridge_report_action" id="input_chemical_catridge_report_menu" parent="sol_boo.reporting_boo_menu" sequence="3"/>
+
+    <menuitem name="Configuration" groups="sol_boo.group_operator_user,base.group_system" id="sol_boo.conf_boo_menu" parent="sol_boo.root_operation_boo_oms" sequence="10"/>
+    <menuitem name="Troubel Master" action="sol_boo.trouble_master_action" id="master_trouble_menu" parent="sol_boo.conf_boo_menu" sequence="1"/>
+
+
+    <!-- ========================= OMS ========================= -->
+    <menuitem name="OMS" id="sol_boo.root_operation_oms" web_icon="sol_boo,static/description/oms.png" groups="sol_boo.group_oms_user,base.group_system,sol_boo.group_oms_user_busdev"/>
+    <menuitem name="Chemical &amp; Catridge" action="sol_boo.chemical_catridge_oms_action" id="input_chemical_catridge_oms_menu" parent="sol_boo.root_operation_oms" sequence="1"/>
+    <menuitem name="Reporting" id="sol_boo.reporting_oms_menu" parent="sol_boo.root_operation_oms" sequence="2"/>
+    <menuitem name="Generate Report" action="sol_boo.action_report_reporting_boo" id="geenrate_report_menu" parent="sol_boo.reporting_boo_menu" sequence="1"/>
+    <menuitem name="Trouble System Excel Report" action="sol_boo.action_report_reporting_trouble_system" id="trouble_system_report_menu" parent="sol_boo.reporting_boo_menu" sequence="2"/>
+    <menuitem name="Chemical &amp; Catridge Report" action="chemical_catridge_report_oms_action" id="input_chemical_catridge_omsreport_menu" parent="sol_boo.root_operation_oms" sequence="3"/>
+
+
+
+  </data>
+</odoo>

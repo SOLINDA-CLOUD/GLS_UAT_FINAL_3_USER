@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="gls_reportingexternal_layout_standard_printout">
+        <div class="header">
+            <div class="col-xs-2">
+                <image src="/ati_srf_report/static/src/img/logo2.png" style="display: inline;width: 120px;height: 75px;margin: 10px;"/>
+            </div>
+        </div>
+        <div class="article o_report_layout_standard">
+            <t t-raw="0" />
+        </div>
+    </template>
+
+    <template id="report_delivery_order">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <t t-foreach="docs" t-as="doc">
+                    <header>
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)" style="max-height: 125px;" alt="Logo"/>
+                            </div>
+                            <div class="col-xs-2">
+                            </div>
+                        </div>
+                    </header>
+                    
+                    <div class="container">
+                        <h1 style="text-align: right;">Delivery Order</h1>
+                        <table style="border-collapse: collapse; width: 100%; height: 110px;" border="0">
+                            <tbody style="font-size: 12px;">
+                                <tr style="height: 18px;">
+                                    <td style="width: 8%; height: 18px;"></td>
+                                    <td style="width: 20%; height: 18px; border: 1px solid black;">PT. GAPURA LIQUA SOLUTIONS</td>
+                                    <td style="width: 4.6875%; text-align: right; padding-right: 10px; height: 18px;"></td>
+                                    <td style="height: 18px; text-align: right; padding-right: 10px; width: 20%;" colspan="2"></td>
+                                </tr>
+                                <tr style="height: 18px;">
+                                    <td style="width: 8%; height: 18px;"></td>
+                                    <td style="width: 20%; height: 18px; border: 1px solid black;">Jl. Cihampelas No. 214A<br />Kel. Cipaganti Kec. Coblong<br />Bandung - West Java</td>
+                                    <td style="width: 4.6875%; height: 55px;" rowspan="3"></td>
+                                    <td style="height: 55px; width: 20%;" colspan="2" rowspan="3">
+                                        <table style="border-collapse: collapse; width: 97.4649%; height: 80px;" border="1">
+                                            <tbody>
+                                                <tr style="height: 10px;">
+                                                    <td style="width: 50%; height: 10px; border: 1px solid black; border-bottom: 0px solid transparent; padding-left: 2px;">DO Date</td>
+                                                    <td style="width: 50%; height: 10px; border: 1px solid black; border-bottom: 0px solid transparent; padding-left: 2px;">DO Number</td>
+                                                </tr>
+                                                <tr style="height: 10px;">
+                                                    <td style="width: 50%; height: 10px; border-width: 0px 1px 1px; border-style: solid; border-color: transparent black black; border-image: initial; text-align: right;">
+                                                        <t t-esc="doc.scheduled_date"/>
+                                                    </td>
+                                                    <td style="width: 50%; height: 10px; border-width: 0px 1px 1px; border-style: solid; border-color: transparent black black; border-image: initial; text-align: right;">
+                                                        <t t-esc="doc.name"/>
+                                                    </td>
+                                                </tr>
+                                                <tr style="height: 10px;">
+                                                    <td style="width: 50%; height: 10px; border: 1px solid black; border-bottom: 0px solid transparent; padding-left: 2px;">Ship Via</td>
+                                                    <td style="width: 50%; height: 10px; border: 1px solid black; border-bottom: 0px solid transparent; padding-left: 2px;">PO Number</td>
+                                                </tr>
+                                                <tr style="height: 10px;">
+                                                    <td style="width: 50%; height: 10px; border-width: 0px 1px 1px; border-style: solid; border-color: transparent black black; border-image: initial; text-align: right;">
+                                                        <t t-esc="doc.ship_via"/>
+                                                    </td>
+                                                    <td style="width: 50%; height: 10px; border-width: 0px 1px 1px; border-style: solid; border-color: transparent black black; border-image: initial; text-align: right;">
+                                                        <t t-esc="doc.origin"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr style="height: 18px;">
+                                    <td style="width: 8%; height: 19px;">Bill To :</td>
+                                    <td style="width: 20%; height: 19px; border: 1px solid black; border-bottom: 1px solid transparent;">
+                                        <span t-field="doc.partner_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr style="height: 18px;">
+                                    <td style="width: 8%; height: 18px;"></td>
+                                    <td style="width: 20%; height: 18px; border: 1px solid black;">
+                                        <span t-field="doc.partner_id.street"/>
+                                    </td>
+                                </tr>
+                                    <tr style="height: 18px;">
+                                    <td style="width: 8%; height: 19px;">Ship To :</td>
+                                    <td style="width: 20%; height: 19px; border: 1px solid black; border-bottom: 1px solid transparent;">
+                                        <span t-field="doc.partner_id.name"/>
+                                    </td>
+                                </tr>
+                                    <tr style="height: 18px;">
+                                    <td style="width: 8%; height: 18px;"></td>
+                                    <td style="width: 20%; height: 18px; border: 1px solid black;">
+                                        <span t-field="doc.partner_id.street"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br />
+                    <br/>
+                    <div class="container"></div>
+                    <div class="container">
+                        <table style="border-collapse: collapse; width: 100%;" border="1">
+                            <thead style="font-size: 12px;">
+                                <tr>
+                                    <td style="width: 11.5892%; text-align: center; border: 1px solid black;">Item</td>
+                                    <td style="width: 33.9313%; text-align: center; border: 1px solid black;">Item Description</td>
+                                    <td style="width: 7.77389%; text-align: center; border: 1px solid black;">Qty</td>
+                                    <td style="width: 20.2301%; text-align: center; border: 1px solid black;">Serial Number</td>
+                                </tr>
+                            </thead>
+                            <tbody style="font-size: 12px;">
+                                <t t-foreach="doc.move_line_ids_without_package" t-as="stock">
+                                    <tr>
+                                        <td style="width: 11.5892%; text-align: left; border: 1px solid black;">
+                                            <t t-esc="stock.product_id.default_code"/>
+                                        </td>
+                                        <td style="width: 33.9313%; border: 1px solid black;">
+                                            <t t-esc="stock.product_id.name"/>
+                                        </td>
+                                        <td style="width: 7.77389%; text-align: right; border: 1px solid black;">
+                                            <t t-esc="stock.qty_done"/> <span t-field="stock.product_uom_id"/>
+                                        </td>
+                                        <td style="width: 20.2301%; text-align: right; border: 1px solid black;">
+                                            <!-- <t t-esc="stock.product_id.default_code"/> -->
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br />
+                    <!-- <div id="total" class="row justify-content-end">
+                        <div class="col-4" style="font-size: 12px;">&nbsp;</div>
+                    </div> -->
+                    <div>
+                        <table style="border-collapse: collapse; width: 64.5058%; height: 59px;" border="1">
+                            <tbody style="font-size: 12px;">
+                                <tr style="height: 18px;">
+                                    <td style="width: 10.7863%; height: 59px; border-bottom: 0px solid transparent; border-right: 1px solid transparent;">Description</td>
+                                    <td style="width: 3.40136%; height: 59px; border-bottom: 0px solid transparent; border-right: 1px solid transparent;">:</td>
+                                    <td style="width: 52.2921%; height: 59px; border-bottom: 0px solid transparent;">
+                                        <t t-esc="doc.origin"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br /><br /><br /><br /><br />
+                    <div class="container">
+                        <table style="border-collapse: collapse; width: 100%; height: 126px;" border="0">
+                            <tbody style="font-size: 12px;">
+                                <tr style="height: 18px;">
+                                    <td style="width: 23.4965%; height: 18px; text-align: center;">Prepared By,</td>
+                                    <td style="width: 25.5944%; height: 18px; text-align: center;">Verified By,</td>
+                                    <td style="width: 6.71329%; height: 18px; text-align: center;"></td>
+                                    <td style="width: 22.7972%; height: 18px; text-align: center;">Approved By,</td>
+                                    <td style="width: 21.3986%; height: 18px; text-align: center;">Received By,</td>
+                                </tr>
+                                <tr style="height: 90px;">
+                                    <td style="width: 23.4965%; height: 90px; text-align: center;"><br /><br /><br /><br />______________</td>
+                                    <td style="width: 25.5944%; height: 90px; text-align: center;"><br /><br /><br /><br />______________</td>
+                                    <td style="width: 6.71329%; height: 90px;"></td>
+                                    <td style="width: 22.7972%; height: 90px; text-align: center;"><br /><br /><br /><br />______________</td>
+                                    <td style="width: 21.3986%; height: 90px; text-align: center;"><br /><br /><br /><br />______________</td>
+                                </tr>
+                                <tr style="height: 18px;">
+                                    <td style="width: 23.4965%; height: 18px; text-align: left;">Date:</td>
+                                    <td style="width: 25.5944%; height: 18px; text-align: left;">Date:</td>
+                                    <td style="width: 6.71329%; height: 18px;"></td>
+                                    <td style="width: 22.7972%; height: 18px; text-align: left;">Date:</td>
+                                    <td style="width: 21.3986%; height: 18px; text-align: left;">Date:</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </t>
+            </div>
+        </t>
+    </template>
+
+</odoo>

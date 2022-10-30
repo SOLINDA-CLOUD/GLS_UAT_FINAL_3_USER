@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="sales_marketing_groupsol" model="res.groups">
+            <field name="name">Validate DO</field>
+        </record>
+
+        <record id="validate_internal_groupsol" model="res.groups">
+            <field name="name">Internal Transfer/Validate</field>
+        </record>
+    </data>
+</odoo>

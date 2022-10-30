@@ -1,0 +1,112 @@
+<odoo>
+    <data>
+
+
+        <record id="chemical_catr_view_search" model="ir.ui.view">
+            <field name="name">chemical.catridge.search</field>
+            <field name="model">chemical.catridge</field>
+            <field name="arch" type="xml">
+                <search string="Search Chemical Catridge">
+                    <field name="warehouse_id" string="Location"/>
+                    <field name="date" string="Date"/>
+                    <field name="product_id"/>
+                    <group expand="1" string="Group By Location">
+                        <filter name="group_by_warehouse" string="Warehouse" context="{'group_by': 'warehouse_id'}"/>
+                    </group>
+                    <group expand="1" string="Group By Chemical">
+                        <filter name="group_by_chemical" string="Chemical" context="{'group_by': 'product_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Tree group-->
+        <record id="chemical_catridge_view_tree" model="ir.ui.view">
+            <field name="name">chemical.catridge.view.tree</field>
+            <field name="model">chemical.catridge</field>
+            <field name="arch" type="xml">
+                <tree string="Chemical Catridge" expand="1" editable="top">
+                    <field name="warehouse_id"/>
+                    <field name="product_id" required="1"/>
+                    <field name="date"/>
+                    <field name="stock_awal" optional="show" />
+                    <field name="penerimaan" optional="show"/>
+                    <field name="penuangan" optional="show"/>
+                    <field name="pemakaian" optional="show"/>
+                    <field name="cleaning_basa" optional="show"/>
+                    <field name="adj_over_loss" optional="show"/>
+                    <field name="dosing_stroke" optional="show"/>
+                    <field name="sisa_stock" optional="show"/>
+                    <field name="sisa_tangki" optional="show"/>
+                    <field name="sisa_tangki_kg" optional="show"/>
+                    <field name="dosing_stroke_percent" optional="show"/>
+                    <field name="type" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- === FORM AREA === -->
+        <record id="chemical_catridge_view_form" model="ir.ui.view">
+            <field name="name">chemical.catridge.view.form</field>
+            <field name="model">chemical.catridge</field>
+            <field name="arch" type="xml">
+                <form string="Chemical Catridge">
+                    <header>
+                        <!-- <button name="submit_jor" type="object" string="Request" states="draft" class="oe_highlight"/> -->
+                        <!-- <button name="review_jor" type="object" string="Review" states="req" class="oe_highlight" /> -->
+                        <!-- <button name="approve_jor" type="object" string="Approve" states="review" class="oe_highlight" /> -->
+                        <!-- <button name="cancel_jor" type="object" string="Cancel" states="review,approve" class="oe_highlight"/> -->
+                        <!-- <button name="set_to_draft" type="object" string="Set To Draft" states="approve"/> -->
+                        <!-- <field name="state" widget="statusbar" statusbar_visible="draft,req,review,approve" /> -->
+                    </header>
+                    <sheet>
+                        <group col="4">
+                            <field name="warehouse_id"/>
+                            <field name="product_id"/>
+                            <field name="date"/>
+                            <field name="stock_awal" />
+                            <field name="penerimaan" />
+                            <field name="penuangan" />
+                            <field name="pemakaian"/>
+                            <field name="cleaning_basa"/>
+                            <field name="adj_over_loss"/>
+                            <field name="dosing_stroke"/>
+                            <field name="sisa_stock"/>
+                            <field name="sisa_tangki"/>
+                            <field name="sisa_tangki_kg"/>
+                            <field name="dosing_stroke_percent"/>
+                        </group>
+
+                    </sheet>
+                    <!-- <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="message_ids"/>
+                    </div> -->
+                </form>
+            </field>
+        </record>
+
+
+
+        <!-- Action group-->
+        <!-- BOO -->
+        <record id="chemical_catridge_req_action" model="ir.actions.act_window">
+            <field name="name">Chemical Catridge</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">chemical.catridge</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type','=', 'boo')]</field>
+            <field name="context">{'search_default_group_by_chemical': 1,'search_default_group_by_warehouse': 1,'default_type':'boo'}</field>
+        </record>
+        <!-- OMS -->
+        <record id="chemical_catridge_oms_action" model="ir.actions.act_window">
+            <field name="name">Chemical Catridge</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">chemical.catridge</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type','=', 'oms')]</field>
+            <field name="context">{'search_default_group_by_chemical': 1,'search_default_group_by_warehouse': 1,'default_type':'oms'}</field>
+        </record>
+
+    </data>
+</odoo>

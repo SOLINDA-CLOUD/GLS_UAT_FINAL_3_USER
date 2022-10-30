@@ -1,0 +1,102 @@
+<odoo>
+    <data>
+
+        <!-- Tree group-->
+        <record id="water_prod_view_tree" model="ir.ui.view">
+            <field name="name">water.prod.daily.view.tree</field>
+            <field name="model">water.prod.daily</field>
+            <field name="arch" type="xml">
+                <tree string="Water Production Daily">
+                    <field name="name" />
+                    <field name="date"/>
+                    <field name="warehouse_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- === FORM AREA === -->
+        <record id="water_prod_view_form" model="ir.ui.view">
+            <field name="name">water.prod.daily.view.form</field>
+            <field name="model">water.prod.daily</field>
+            <field name="arch" type="xml">
+                <form string="Water Production Daily">
+                    <header>
+                        <!-- <button name="submit_jor" type="object" string="Request" states="draft" class="oe_highlight"/> -->
+                        <!-- <button name="review_jor" type="object" string="Review" states="req" class="oe_highlight" /> -->
+                        <!-- <button name="approve_jor" type="object" string="Approve" states="review" class="oe_highlight" /> -->
+                        <!-- <button name="cancel_jor" type="object" string="Cancel" states="review,approve" class="oe_highlight"/> -->
+                        <!-- <button name="set_to_draft" type="object" string="Set To Draft" states="approve"/> -->
+                        <!-- <field name="state" widget="statusbar" statusbar_visible="draft,req,review,approve" /> -->
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h2>
+                                <field name="name" readonly="1"/>
+                            </h2>
+                        </div>
+                        <group col="4">
+                            <field name="warehouse_id" required="1"/>
+                            <field name="date" readonly="0"/>
+                        </group>
+                        <group >
+                            <group>
+                                <field name="ro_read"/>
+                                <field name="lwbp_read"/>
+                                <field name="wbp_read"/>
+                                <field name="deep_well_read"/>
+                                <field name="kwh_ro_read"/>
+                                <field name="minimum_prod"/>
+                            </group>
+                            <group>
+                                <field name="aktual_ro" />
+                                <field name="lwbp" />
+                                <field name="wbp"/>
+                                <field name="deep_well"/>
+                                <field name="ro_kwh"/>
+                                <field name="sec"/>
+                            </group>
+                        </group>
+                        <group col="4">
+                            <field name="saidi"/>
+                            <field name="saifi"/>
+                            <field colspan="4" name="remarks" />
+                        </group>
+                        <notebook>
+                            <page name="input" string="Input Trouble">
+                                <field name="shutdown_system_line" nolabel="1" widget="one2many_list">
+                                    <tree editable="bottom">
+                                        <field name="time" required="1"/>
+                                        <field name="end_time" optional="show"/>
+                                        <field name="trouble_id" required="1" options="{'no_create': True, 'no_open': True}"/>
+                                        <field name="type" optional="show" required="1"/>
+                                        <field name="is_trouble" optional="show"/>
+                                        <field name="state" readonly="1" optional="hide"/>
+                                        <field name="warehouse_id" invisible="1"/>
+                                        <field name="job_order_id" invisible="1"/>
+                                        <field name="water_prod_id" invisible="1"/>
+                                        <!-- <button string="Open" name="create_open_job_order" type="object" class="oe_highlight"/> -->
+                                        <!-- <button string="Create/Open Job Order Request" name="create_open_job_order" type="object" class="oe_highlight"/> -->
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action group-->
+        <record id="water_prod_req_action" model="ir.actions.act_window">
+            <field name="name">Water Production Daily</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">water.prod.daily</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

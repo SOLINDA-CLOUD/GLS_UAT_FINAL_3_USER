@@ -1,0 +1,25 @@
+<odoo>
+  <data>
+    <record id="hr_expense_sheet_form_inherit_ref" model="ir.ui.view">
+      <field name="name">hr.expense.sheet.form.inherit.ref</field>
+      <field name="model">hr.expense.sheet</field>
+      <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form"/>
+      <field name="arch" type="xml">
+        <field name="accounting_date" position="after">
+          <field name="ref" />
+        </field>
+      </field>
+    </record>
+
+    <record id="hr_expense_sheet_tree_inherit_ref" model="ir.ui.view">
+      <field name="name">hr.expense.sheet.tree.inherit.ref</field>
+      <field name="model">hr.expense.sheet</field>
+      <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_tree"/>
+      <field name="arch" type="xml">
+        <field name="name" position="after">
+          <field name="ref" />
+        </field>
+      </field>
+    </record>
+  </data>
+</odoo>

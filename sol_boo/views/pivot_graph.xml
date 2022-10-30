@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="water_prod_daily_view_pivot" model="ir.ui.view">
+            <field name="name">water.prod.daily.view.pivot</field>
+            <field name="model">water.prod.daily</field>
+            <field name="arch" type="xml">
+                <pivot string="Water Production Daily Report" disable_linking="true">
+                    <field name="date" type="row" />
+                    <field name="aktual_ro" />
+                    <field name="lwbp" />
+                    <field name="lwbp_read" />
+                    <field name="wbp" />
+                    <field name="wbp_read" />
+                    <field name="sec" />
+                    <field name="minimum_prod" />
+                    <field name="hasil_prod" />
+                    <field name="remarks" />
+                </pivot>
+            </field>
+        </record>
+
+        <record id="water_prod_req_report_action" model="ir.actions.act_window">
+            <field name="name">Water Production Daily Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">water.prod.daily</field>
+            <field name="view_mode">pivot,graph</field>
+        </record>
+
+        <record id="chemical_catridge_report_action" model="ir.actions.act_window">
+            <field name="name">Chemical Catridge Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">chemical.catridge</field>
+            <field name="view_mode">pivot,graph</field>
+            <!-- <field name="domain">[('type','=', 'shift')]</field>
+            <field name="context">{'default_type':'shift'}</field> -->
+        </record>
+
+        <!-- BOO CHEMICAL -->
+        <record id="chemical_catridge_report_action" model="ir.actions.act_window">
+            <field name="name">Chemical Catridge Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">chemical.catridge</field>
+            <field name="view_mode">pivot,graph</field>
+            <field name="domain">[('type','=', 'boo')]</field>
+            <field name="context">{'search_default_group_by_chemical': 1,'search_default_group_by_warehouse': 1,'default_type':'boo'}</field>
+        </record>
+
+        <record id="chemical_catridge_report_oms_action" model="ir.actions.act_window">
+            <field name="name">Chemical Catridge Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">chemical.catridge</field>
+            <field name="view_mode">pivot,graph</field>
+            <field name="domain">[('type','=', 'oms')]</field>
+            <field name="context">{'search_default_group_by_chemical': 1,'search_default_group_by_warehouse': 1,'default_type':'oms'}</field>
+        </record>
+
+
+    </data>
+</odoo>

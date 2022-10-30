@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record id="maintenance_request_inherit_kanbanboo_view_id" model="ir.ui.view">
+            <field name="name">maintenance.request.view.kanban.inherit</field>
+            <field name="model">maintenance.request</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_request_view_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('oe_kanban_bottom_right')]" position="after">
+                    <strong>
+                        <field name="duration_change_stage"/>
+                    </strong>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="maintenance_request_inherit_tree_view_id" model="ir.ui.view">
+            <field name="name">maintenance.request.view.tree.inherit</field>
+            <field name="model">maintenance.request</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_request_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='stage_id']" position="after">
+                    <field name="change_stage_time" optional="hide"/>
+                    <field name="duration_change_stage" optional="hide"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- maintenance.request inherit form view -->
+        <record id="maintenance_request_inherit_form_view_id" model="ir.ui.view">
+            <field name="name">maintenance.request.inherit.view.form</field>
+            <field name="model">maintenance.request</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//sheet/div" position="before">
+                    <div class="oe_button_box" name="button_box">
+                        <button name="create_open_mr" class="oe_stat_button" type="object" icon="fa-dropbox" groups="base.group_system,sol_boo.group_spv_mantenance_user">
+                            <field name="mr_count" widget="statinfo" readonly="1" string="MR"/>
+                        </button>
+                    </div>
+                </xpath>
+
+                <xpath expr="//field[@name='equipment_id']" position="before">
+                    <field name="location_id"/>
+                </xpath>
+
+                <xpath expr="//sheet" position="inside">
+                    <notebook>
+                        <page name="action_plan" string="Action Plan">
+                            <field name="action_plan_line" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="name" required="1"/>
+                                    <field name="due_date"/>
+                                    <field name="status" optional="show"/>
+                                    <field name="maintenance_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="progress_history" string="Progress History">
+                            <field name="progres_history_line" nolabel="1" readonly="1">
+                                <tree editable="bottom">
+                                    <field name="start_date" />
+                                    <field name="stage_from"/>
+                                    <field name="end_date"/>
+                                    <field name="stage_to"/>
+                                    <field name="duration" style="font-weight:bold"/>
+                                </tree>
+                            </field>
+                            <field name="duration_change_stage" invisible="1"/>
+                            <field name="change_stage_time" invisible="1"/>
+                        </page>
+                        <page name="equip_history" string="Equipments History">
+                            <field name="equipment_history_line" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="equipment_id"/>
+                                    <field name="from_time"/>
+                                    <field name="to_time"/>
+                                    <field name="notes"/>
+                                    <field name="maintenance_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+
+
+</odoo>

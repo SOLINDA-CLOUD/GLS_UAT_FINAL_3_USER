@@ -1,0 +1,64 @@
+<odoo>
+  <data>
+    <record id="view_task_tree2_inherit_project" model="ir.ui.view">
+      <field name="name">project.task.view.tree.inherit</field>
+      <field name="model">project.task</field>
+      <field name="inherit_id" ref="project.view_task_tree2"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='stage_id']" position="before">
+          <field name="change_stage_time" widget="remaining_days"/>
+          <field name="duration_change_stage" invisible="1"/>
+          <field name="percentage_done" widget="percentage" invisible="1" optional="hide"/>
+          <field name="percentage_done_char" invisible="0" optional="hide"/>
+          <field name="attachment_ids" />
+        </xpath>
+      </field>
+    </record>
+
+    <record id="view_task_kanban_inherit_project" model="ir.ui.view">
+      <field name="name">project.task.view.form.inherit</field>
+      <field name="model">project.task</field>
+      <field name="inherit_id" ref="project.view_task_kanban"/>
+      <field name="arch" type="xml">
+        <xpath expr="//div[hasclass('oe_kanban_content')]" position="inside">
+          <div attrs="{'invisible': [('is_closed', '=', True)]}">
+              Duration : 
+            <field name="change_stage_time" widget="remaining_days" force_save="1"/>
+          </div>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="view_task_form2_inherit_project_task" model="ir.ui.view">
+      <field name="name">project.task.view.form.inherit</field>
+      <field name="model">project.task</field>
+      <field name="inherit_id" ref="project.view_task_form2"/>
+      <field name="arch" type="xml">
+        <xpath expr="//notebook/page[@name='extra_info']/group/group/field[@name='sequence']" position="after">
+          <field name="change_stage_time" force_save="1" invisible="1"/>
+          <field name="percentage_done" widget="percentage" invisible="1"/>
+          <field name="percentage_done_char" invisible="1"/>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="project_enterprise_inherit_projecttask" model="ir.ui.view">
+      <field name="name">project.task.view.gantt.inherit</field>
+      <field name="model">project.task</field>
+      <field name="inherit_id" ref="project_enterprise.project_task_view_gantt"/>
+      <field name="arch" type="xml">
+        <xpath expr="//templates/div[@t-name='gantt-popover']" position="inside">
+          <!-- Add your fields here -->
+          <div t-if="percentage_done_char">
+            <strong>Progress — </strong>
+            <t t-esc="percentage_done_char"/>
+          </div>
+        </xpath>
+        <xpath expr="//templates" position="after">
+          <field name="percentage_done_char"/>
+        </xpath>
+      </field>
+    </record>
+
+  </data>
+</odoo>

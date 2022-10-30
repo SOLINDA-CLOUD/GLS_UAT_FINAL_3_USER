@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record id="view_purchase_request_form_inherit_purchase_request" model="ir.ui.view">
+            <field name="name">purchase.request.view.form.inherit</field>
+            <field name="model">purchase.request</field>
+            <field name="inherit_id" ref="purchase_request.view_purchase_request_form"/>
+            <field name="arch" type="xml">
+                <!-- <button name="button_to_approve" position="after"> -->
+                <!-- <button string="Approve" name="action_approve_gm" type="object" class="oe_highlight" states="to_approve" groups="purchase_request.group_purchase_request_manager"/> -->
+                <!-- <button string="Approve dir" name="button_approved" type="object" class="oe_highlight" attrs="{'invisible':['|',('qty_is_bigger','=',False),('state','!=','approved_gm')]}"/> -->
+                <!-- </button> -->
+
+                <!-- <xpath expr="//button[@name='button_approved']" position="attributes">
+                    <attribute name="states" remove="to_approve"/>
+                    <attribute name="attrs">{'invisible':['|',('qty_is_bigger','=',False),('state','!=','approved_gm')]}</attribute>
+                </xpath> -->
+                <!-- <xpath expr="//button[@name='button_draft']" position="attributes">
+                    <attribute name="states" remove="to_approve"/>
+                    <attribute name="attrs">{'invisible':['|',('qty_is_bigger','=',False),('state','!=','approved_gm')]}</attribute>
+                </xpath> -->
+                <!-- <xpath expr="//button[@name='button_rejected']" position="attributes">
+                    <attribute name="states" remove="to_approve"/>
+                    <attribute name="attrs">{'invisible':['|',('qty_is_bigger','=',False),('state','!=','approved_gm')]}</attribute>
+                </xpath> -->
+
+                <field name="group_id" position="after">
+                    <field name="qty_is_bigger" invisible="0" />
+                    <field name="project_code" force_save="1" attrs="{'readonly': [('create_directly','=', False)]}" />
+                </field>
+
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='product_qty']" position="after">
+                    <field name="qty_item" />
+                </xpath>
+
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='company_id']" position="attributes">
+                    <attribute name="optional">hide</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='purchase_state']" position="after">
+                    <field name="product_qty_is_bigger" invisible="1" />
+                    <field name="reason_qty_different" attrs="{'column_invisible':[('parent.qty_is_bigger','=',False)]}" />
+                </xpath>
+
+                <xpath expr="//field[@name='line_ids']/tree" position="attributes">
+                    <attribute name="decoration-danger">product_qty &gt; qty_item</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+
+        <!-- specifications -->
+
+        <record id="view_purchase_request_form_detail_inherit_purchase_request" model="ir.ui.view">
+            <field name="name">purchase.request.line.detail.view.form.inherit</field>
+            <field name="model">purchase.request.line</field>
+            <field name="inherit_id" ref="purchase_request.purchase_request_line_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//group[@name='specifications']" position="before">
+                    <group name="reason" string="Reason">
+                        <field name="reason_qty_different" nolabel="1" />
+                    </group>
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+        <record id="view_purchase_request_line_details_inherit_purchase_request" model="ir.ui.view">
+            <field name="name">purchase.request.line.details.view.form.inherit</field>
+            <field name="model">purchase.request.line</field>
+            <field name="inherit_id" ref="purchase_request.view_purchase_request_line_details"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//group[@name='specifications']" position="before">
+                    <group name="reason" string="Reason">
+                        <field name="reason_qty_different" nolabel="1" readonly="1" />
+                    </group>
+                </xpath>
+
+
+            </field>
+        </record>
+
+    </data>
+
+
+</odoo>

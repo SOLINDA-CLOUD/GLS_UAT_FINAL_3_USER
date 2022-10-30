@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="external_layout_standard_printout_gls">
+        <div class="header">
+            <div class="col-xs-2">
+                <t t-set="company" t-value="res_company"></t>
+                <image src="/ati_srf_report/static/src/img/logo2.png" style="display: inline;width: 120px;height: 75px;"/>
+                <!-- <h3>PT. SRI REJEKI FERTILIZER</h3> -->
+            </div>
+        </div>
+        <div class="article o_report_layout_standard">
+            <t t-raw="0" />
+        </div>
+        <div class="footer">
+            <div class="text-center">
+                <strong>PT. GAPURA LIQOUA SOLUTIONS</strong>
+                <br/>
+                Jl Cihampelas No. 214A, Bandung 40131, West Java, Indonesia
+                <ul class="list-inline mb4">
+                    <li class="list-inline-item">p.+62 22 2035 280</li>
+                    <li class="list-inline-item">f.+62 22 2035 290</li>
+                    <li class="list-inline-item">e.info@gapuraliquasolutions.com </li>
+                    <li class="list-inline-item">www.gapuraliquasolutions.com</li>
+                    <!-- <li t-if="doc.company_id.vat" class="list-inline-item"><t t-esc="(company.country_id.vat_label or 'Tax ID').replace(' ','\N{NO-BREAK SPACE}')"/>: <span t-esc="company_id.vat.replace(' ','\N{NO-BREAK SPACE}')"/></li> -->
+                </ul>
+            </div>
+        </div>
+    </template>
+
+    <template id="report_leads_cna">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <t t-foreach="docs" t-as="doc">
+                    <header>
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <!-- <image src="/gls_reporting/static/src/img/gls_logo.png" style="display: inline;width: 225px;height: 125px;"/> -->
+                                <img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)" style="max-height: 125px;" alt="Logo" />
+                            </div>
+                            <div class="col-xs-2">
+
+                            </div>
+                        </div>
+                    </header>
+
+                    <h1 style="text-align: center;"><strong>CUSTOMER NEED ANALYSIS</strong></h1>
+                    <h1 style="text-align: center;"><strong>REPORT</strong></h1>
+                    <h3 style="text-align: center;"><strong>WATER/WASTEWATER TREATMENT</strong></h3>
+                                    
+                    <table style="table-layout: fixed; border-collapse: collapse; width: 100%; height: 634px; vertical-align: top; margin-left: 30px;" border="0">
+                        <tbody>
+                             <tr style="height: 18px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;"></td>
+                                <td style="width: 37.0623%; height: 18px;"></td>
+                                <td style="width: 1.87266%; height: 18px;"></td>
+                                <td style="width: 84.393%; height: 18px;"></td>
+                            </tr>
+                            <tr style="height: 18px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;">1)</td>
+                                <td style="width: 37.0623%; height: 18px;">General Details</td>
+                                <td style="width: 1.87266%; height: 18px;"></td>
+                                <td style="width: 84.393%; height: 18px;"></td>
+                            </tr>
+                            <tr style="height: 18px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;"></td>
+                                <td style="width: 37.0623%; height: 18px;"></td>
+                                <td style="width: 1.87266%; height: 18px;"></td>
+                                <td style="width: 84.393%; height: 18px;"></td>
+                            </tr>
+                            <tr style="height: 18px; padding: 5px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;"></td>
+                                <td style="width: 37.0623%; height: 18px;">a) Facility Name</td>
+                                <td style="width: 1.87266%; height: 18px;">:</td>
+                                <td style="width: 84.393%; height: 18px;">
+                                    <t t-esc="doc.facility_name"/>
+                                </td>
+                            </tr>
+                            <tr style="height: 18px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;"></td>
+                                <td style="width: 37.0623%; height: 18px;"></td>
+                                <td style="width: 1.87266%; height: 18px;"></td>
+                                <td style="width: 84.393%; height: 18px;"></td>
+                            </tr>
+                            <tr style="height: 18px; padding: 5px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;"></td>
+                                <td style="width: 37.0623%; height: 18px;">b) Owning Company/Group</td>
+                                <td style="width: 1.87266%; height: 18px;">:</td>
+                                <td style="width: 84.393%; height: 18px;">
+                                    <t t-esc="doc.owning_company"/>
+                                </td>
+                            </tr>
+                            <tr style="height: 18px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;"></td>
+                                <td style="width: 37.0623%; height: 18px;"></td>
+                                <td style="width: 1.87266%; height: 18px;"></td>
+                                <td style="width: 84.393%; height: 18px;"></td>
+                            </tr>
+                            <tr style="height: 18px; padding: 5px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;"></td>
+                                <td style="width: 37.0623%; height: 18px;">c) Address</td>
+                                <td style="width: 1.87266%; height: 18px;">:</td>
+                                <td style="width: 84.393%; height: 18px;">
+                                    <t t-esc="doc.address"/>
+                                </td>
+                            </tr>
+                            <tr style="height: 18px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;"></td>
+                                <td style="width: 37.0623%; height: 18px;"></td>
+                                <td style="width: 1.87266%; height: 18px;"></td>
+                                <td style="width: 84.393%; height: 18px;"></td>
+                            </tr>
+                            <tr style="height: 18px; padding: 5px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;"></td>
+                                <td style="width: 37.0623%; height: 18px;">d) Contact Person</td>
+                                <td style="width: 1.87266%; height: 18px;">:</td>
+                                <td style="width: 84.393%; height: 18px;">
+                                    <t t-esc="doc.contact_person"/>
+                                </td>
+                            </tr>
+                            <tr style="height: 18px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;"></td>
+                                <td style="width: 37.0623%; height: 18px;"></td>
+                                <td style="width: 1.87266%; height: 18px;"></td>
+                                <td style="width: 84.393%; height: 18px;"></td>
+                            </tr>
+                            <tr style="height: 18px; padding: 5px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;"></td>
+                                <td style="width: 37.0623%; height: 18px;">e) Telephone</td>
+                                <td style="width: 1.87266%; height: 18px;">:</td>
+                                <td style="width: 84.393%; height: 18px;">
+                                    <t t-esc="doc.telephone"/>
+                                </td>
+                            </tr>
+                            <tr style="height: 18px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;"></td>
+                                <td style="width: 37.0623%; height: 18px;"></td>
+                                <td style="width: 1.87266%; height: 18px;"></td>
+                                <td style="width: 84.393%; height: 18px;"></td>
+                            </tr>
+                            <tr style="height: 18px; padding: 5px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;"></td>
+                                <td style="width: 37.0623%; height: 18px;">f) E-mail</td>
+                                <td style="width: 1.87266%; height: 18px;">:</td>
+                                <td style="width: 84.393%; height: 18px;">
+                                    <t t-esc="doc.email"/>
+                                </td>
+                            </tr>
+                            <tr style="height: 18px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;"></td>
+                                <td style="width: 37.0623%; height: 18px;"></td>
+                                <td style="width: 1.87266%; height: 18px;"></td>
+                                <td style="width: 84.393%; height: 18px;"></td>
+                            </tr>
+                            <tr style="height: 18px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;">2)</td>
+                                <td style="width: 37.0623%; height: 18px;">Type of Business</td>
+                                <td style="width: 1.87266%; height: 18px;">:</td>
+                                <td style="width: 84.393%; height: 18px;">
+                                    <span t-field="doc.business_type_cna"/>
+                                </td>
+                            </tr>
+                            <tr style="height: 18px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;"></td>
+                                <td style="width: 37.0623%; height: 18px;"></td>
+                                <td style="width: 1.87266%; height: 18px;"></td>
+                                <td style="width: 84.393%; height: 18px;"></td>
+                            </tr>
+                            <tr style="height: 18px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;">3)</td>
+                                <td style="width: 37.0623%; height: 18px;">Client Category (Purchase Power)</td>
+                                <td style="width: 1.87266%; height: 18px;">:</td>
+                                <td style="width: 84.393%; height: 18px;">
+                                    <t t-set="values" t-value="dict([('high','High End'),('mid','Mid End'), (False,False)])"/> 
+                                    <t t-esc="values[doc.client_category]"/>
+                                </td>
+                            </tr>
+                            <tr style="height: 18px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;"></td>
+                                <td style="width: 37.0623%; height: 18px;"></td>
+                                <td style="width: 1.87266%; height: 18px;"></td>
+                                <td style="width: 84.393%; height: 18px;"></td>
+                            </tr>
+                            <tr style="height: 18px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;">4)</td>
+                                <td style="width: 37.0623%; height: 18px;">Project Status</td>
+                                <td style="width: 1.87266%; height: 18px;">:</td>
+                                <td style="width: 84.393%; height: 18px;">
+                                    <span t-field="doc.project_status"/>
+                                </td>
+                            </tr>
+                            <tr style="height: 18px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;"></td>
+                                <td style="width: 37.0623%; height: 18px;"></td>
+                                <td style="width: 1.87266%; height: 18px;"></td>
+                                <td style="width: 84.393%; height: 18px;"></td>
+                            </tr>
+                            <tr style="height: 18px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;">5)</td>
+                                <td style="width: 37.0623%; height: 18px;">Project Scheme</td>
+                                <td style="width: 1.87266%; height: 18px;">:</td>
+                                <td style="width: 84.393%; height: 18px;">
+                                    <span t-field="doc.project_scheme"/>
+                                </td>
+                            </tr>
+                            <tr style="height: 18px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;"></td>
+                                <td style="width: 37.0623%; height: 18px;"></td>
+                                <td style="width: 1.87266%; height: 18px;"></td>
+                                <td style="width: 84.393%; height: 18px;"></td>
+                            </tr>
+                            <tr style="height: 18px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;">6)</td>
+                                <td style="width: 37.0623%; height: 18px;">Timeline</td>
+                                <td style="width: 1.87266%; height: 18px;"></td>
+                                <td style="width: 84.393%; height: 18px;"></td>
+                            </tr>
+                            <tr style="height: 18px; padding: 5px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;"></td>
+                                <td style="width: 37.0623%; height: 18px;">a) Proposal Submission</td>
+                                <td style="width: 1.87266%; height: 18px;">:</td>
+                                <td style="width: 84.393%; height: 18px;">
+                                    <t t-esc="doc.proposal_submission"/>
+                                </td>
+                            </tr>
+                            <tr style="height: 18px; padding: 5px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;"></td>
+                                <td style="width: 37.0623%; height: 18px;">b) Construction Start Period</td>
+                                <td style="width: 1.87266%; height: 18px;">:</td>
+                                <td style="width: 84.393%; height: 18px;">
+                                    <t t-esc="doc.construction_period"/>
+                                </td>
+                            </tr>
+                            <tr style="height: 18px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;"></td>
+                                <td style="width: 37.0623%; height: 18px;"></td>
+                                <td style="width: 1.87266%; height: 18px;"></td>
+                                <td style="width: 84.393%; height: 18px;"></td>
+                            </tr>
+                            <tr style="height: 18px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;">7)</td>
+                                <td style="width: 37.0623%; height: 18px;">Budget/Price Limitation</td>
+                                <td style="width: 1.87266%; height: 18px;">:</td>
+                                <td style="width: 84.393%; height: 18px;">
+                                    <t t-esc="doc.budget_limitation"/>
+                                </td>
+                            </tr>
+                            <tr style="height: 18px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;"></td>
+                                <td style="width: 37.0623%; height: 18px;"></td>
+                                <td style="width: 1.87266%; height: 18px;"></td>
+                                <td style="width: 84.393%; height: 18px;"></td>
+                            </tr>
+                            <tr style="height: 18px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;">8)</td>
+                                <td style="width: 37.0623%; height: 18px;">Competitors</td>
+                                <td style="width: 1.87266%; height: 18px;">:</td>
+                                <td style="width: 84.393%; height: 18px;">
+                                    <t t-esc="doc.competitors"/>
+                                </td>
+                            </tr>
+                            <tr style="height: 18px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;"></td>
+                                <td style="width: 37.0623%; height: 18px;"></td>
+                                <td style="width: 1.87266%; height: 18px;"></td>
+                                <td style="width: 84.393%; height: 18px;"></td>
+                            </tr>
+                            <tr style="height: 18px;">
+                                <td style="width: 4.38%; text-align: center; height: 18px;">9)</td>
+                                <td style="width: 37.0623%; height: 18px;">Other issue /Other Concern</td>
+                                <td style="width: 1.87266%; height: 18px;">:</td>
+                                <td style="width: 84.393%; height: 18px;">(please attach a Questionnaire-Site Survey Form)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+            </div>  
+        </t>
+    </template>
+
+</odoo>

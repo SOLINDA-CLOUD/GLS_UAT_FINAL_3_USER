@@ -1,0 +1,98 @@
+<odoo>
+    <data>
+
+        <!-- Tree group-->
+        <record id="shutdown_system_view_tree" model="ir.ui.view">
+            <field name="name">shutdown.system.view.tree</field>
+            <field name="model">shutdown.system</field>
+            <field name="arch" type="xml">
+                <tree string="Shutdown System">
+                    <field name="trouble_id" />
+                    <field name="warehouse_id" />
+                    <field name="type"/>
+                    <field name="is_trouble" optional="hide"/>
+                    <field name="time"/>
+                    <field name="frek_cleaning" optional="hide" invisible="1"/>
+                    <field name="grease_usage" optional="hide"/>
+                    <field name="state" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- === FORM AREA === -->
+        <record id="shutdown_system_view_form" model="ir.ui.view">
+            <field name="name">shutdown.system.view.form</field>
+            <field name="model">shutdown.system</field>
+            <field name="arch" type="xml">
+                <form string="Shutdown System">
+                    <header>
+                        <button name="confirm_backwash" type="object" string="Confirm Backwash" states="draft" attrs="{'invisible': ['|',('type', '!=', 'backwash')]}" class="oe_highlight"/>
+                        <button name="state_done" type="object" string="Approved" states="draft" attrs="{'invisible': ['|',('type', '!=', 'grease')]}" class="oe_highlight"/>
+                        <!-- <button name="approve_button" type="object" string="Request" states="draft" class="oe_highlight"/> -->
+                        <field name="state" widget="statusbar" statusbar_visible="draft,done" attrs="{'invisible': [('type', '!=', 'backwash')]}"/>
+                    </header>
+
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="create_open_job_order" class="oe_stat_button" type="object" icon="fa-tasks" attrs="{'invisible': [('type', '!=', 'trouble')]}" groups="base.group_system,sol_boo.group_spv_operator_user">
+                                <field name="job_order_id" widget="statinfo" readonly="1" string="Job Order"/>
+                            </button>
+                            <button name="create_open_maintenance" style="width: 16%;" class="oe_stat_button" type="object" icon="fa-clock-o" attrs="{'invisible': [('type', 'in',['backwash','cleaning','grease'])]}">
+                                <field name="state_maintenance" widget="statinfo" readonly="1" string="Progres"/>
+                                <field name="maintenance_id" widget="statinfo" readonly="1" invisible="1"/>
+                            </button>
+                            <button name="create_open_mr" class="oe_stat_button" type="object" icon="fa-dropbox" attrs="{'invisible': [('type', 'in',['backwash','trouble'])]}" groups="base.group_system,sol_boo.group_spv_operator_user">
+                                <field name="mr_count" widget="statinfo" readonly="1" string="MR"/>
+                            </button>
+                        </div>
+
+                        <group col="4" name="cleaning_backwash_flow">
+                            <field name="warehouse_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="time" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="trouble_id" colspan="4" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="grease_usage" attrs="{'readonly': [('state', '!=', 'draft')],'invisible': [('type', '!=', 'grease')]}"/>
+                        </group>
+
+                        <group name="attachment_">
+                            <field name="attachment" string="Upload Foto" widget="binary" filename="filename" attrs="{'invisible': [('type', 'not in',['backwash','grease'])],'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="attachment" string="Upload laporan" widget="binary" filename="filename" groups="base.group_system,sol_boo.group_spv_operator_user" attrs="{'invisible': [('type', 'not in', ['cleaning'])],'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="filename" invisible="1"/>
+                            <field name="type" invisible="1" required="1"/>
+                        </group>
+
+                        <group name="cleaning_consumption" col="4" string="Cleaning Report" attrs="{'invisible': [('type', '!=', 'cleaning')]}" groups="base.group_system,sol_boo.group_spv_operator_user">
+                            <field name="frek_cleaning" attrs="{'readonly': [('state', '!=', 'draft')]}" invisible="1"/>
+                            <field name="cleaning_consumption_ids" nolabel="1" invisible="1" widget="one2many_list" colspan="4">
+                                <tree editable="bottom">
+                                    <field name="product_id" required="1"/>
+                                    <field name="consumption" required="1"/>
+                                    <field name="remarks" optional="show"/>
+                                    <field name="shutdown_id" invisible="1"/>
+                                    <!-- <button string="Open" name="create_open_job_order" type="object" class="oe_highlight"/> -->
+                                    <!-- <button string="Create/Open Job Order Request" name="create_open_job_order" type="object" class="oe_highlight"/> -->
+                                </tree>
+                            </field>
+                        </group>
+
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- Action group-->
+        <record id="shutdown_system_req_action" model="ir.actions.act_window">
+            <field name="name">Shutdown System</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">shutdown.system</field>
+            <field name="view_mode">tree,form</field>
+            <!-- <field name="domain">[('is_trouble','=', True)]</field>
+            <field name="context">{'default_is_trouble':True}</field> -->
+        </record>
+
+    </data>
+</odoo>

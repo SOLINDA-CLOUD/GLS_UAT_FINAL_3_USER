@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <!-- VIEW RAP -->
+
+        <record id="cost_sheet_rap_view_tree" model="ir.ui.view">
+            <field name="name">rap.rap.rap.view.tree</field>
+            <field name="model">rap.rap</field>
+            <field name="arch" type="xml">
+                <tree sample="1" create="0">
+                    <field name="name" />
+                    <field name="date_document" />
+                    <field name="partner_id"/>
+                    <field name="user_id" />
+                    <field name="project_manager" widget="many2one_avatar_user"/>
+                    <field name="currency_id" invisible="1" />
+                    <!-- <field name="total_amount" widget="monetary" options="{'currency_field': 'currency_id'}" /> -->
+                    <field name="state" widget="badge" decoration-info="state == 'submit'" decoration-success="state == 'done'" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="cost_sheet_rap_view_form" model="ir.ui.view">
+            <field name="name">rap.rap.rap.view.form</field>
+            <field name="model">rap.rap</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <header>
+                        <button string="View Items" name="view_component_rap" type="object" class="oe_highlight"/>
+                        <button string="Submit" name="action_submit" states="draft,revisied" type="object" class="oe_highlight"/>
+                        <button string="Approve" name="waiting_approval" type="object" attrs="{'invisible':[('is_approver','=', False)]}" class="oe_highlight"/>
+                        <button string="Revision" name="action_revision" states="done,cancel" type="object" class="oe_highlight"/>
+                        <button string="Cancel" name="action_cancel" states="done" type="object"/>
+                        <button string="Set to Draft" name="action_to_draft" states="done" type="object"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,submit,done" />
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group col="4">
+                            <field name="date_document" attrs="{'readonly':[('state','!=','draft')]}" />
+                            <field name="user_id" readonly="1" />
+                            <field name="project_id" readonly="1" />
+                            <field name="project_manager" widget="many2one_avatar"/>
+                            <field name="project_code" readonly="1"/>
+                            <field name="reason" />
+                            <field name="partner_id" readonly="1" force_save="1"/>
+                            <field name="approval_id" invisible="1" />
+                            <field name="approver_id" invisible="1" />
+                            <field name="is_approver" invisible="1" />
+                            <field name="revision_on" invisible="1" />
+                        </group>
+                        <notebook>
+                            <page string="Category">
+                                <field name="category_line_ids" attrs="{'readonly':[('state','!=','draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="product_id" />
+                                        <field name="rab_price" />
+                                        <field name="rap_price"/>
+                                        <field name="price_unit" />
+                                        <button name="action_view_detail_rap" type="object" icon="fa-pencil-square-o" />
+                                    </tree>
+                                </field>
+
+                                <group name="note_group" col="6" class="mt-2 mt-md-0">
+                                    <group colspan="4">
+                                        <field name="note" nolabel="1" placeholder="Terms and conditions..." attrs="{'readonly':[('state','!=','draft')]}"/>
+                                    </group>
+                                    <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                        <field name="total_amount_rab" />
+                                        <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                            <label for="total_amount"/>
+                                        </div>
+                                        <field name="total_amount" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    </group>
+                                    <div class="oe_clear"/>
+                                </group>
+                            </page>
+                            <page name="ga_project" string="GA Project">
+                                <field name="ga_project_line_ids" readonly="1">
+                                    <tree editable="bottom">
+                                        <field name="product_id" required="1" />
+                                        <field name="product_qty" />
+                                        <field name="product_uom" />
+                                        <field name="product_uom_category_id" invisible="1" />
+                                        <field name="realization_price"/>
+                                        <field name="existing_price" force_save="1" readonly="1"/>
+                                        <field name="rfq_price" force_save="1"/>
+                                        <field name="total_price" />
+                                        <field name="remarks" />
+                                    </tree>
+                                </field>
+                            </page>
+
+                            <page name="waranty" string="Warranty">
+                                <field name="waranty_line_ids" readonly="1">
+                                    <tree editable="bottom">
+                                        <field name="product_id" required="1" />
+                                        <field name="product_qty" />
+                                        <field name="product_uom" />
+                                        <field name="product_uom_category_id" invisible="1" />
+                                        <field name="realization_price"/>
+                                        <field name="existing_price" force_save="1" readonly="1"/>
+                                        <field name="rfq_price" force_save="1"/>
+                                        <field name="total_price" />
+                                        <field name="remarks" />
+                                    </tree>
+                                </field>
+                            </page>
+
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- END VIEW RAP -->
+
+
+
+        <!-- RAP Category -->
+        <record id="rap_category_view_form" model="ir.ui.view">
+            <field name="name">rap.category.view.form</field>
+            <field name="model">rap.category</field>
+            <field name="arch" type="xml">
+                <form string="" create="0">
+                    <sheet>
+                        <group>
+                            <field name="rap_id" readonly="1" force_save="1" />
+                            <field name="product_id" readonly="1" force_save="1" />
+                            <field name="rap_state" invisible="0" />
+                        </group>
+                        <field name="parent_component_line_ids" context="{'default_rap_id':parent.rap_id,'default_rab_id':False}" attrs="{'readonly':[('rap_state','!=','draft')]}">
+                            <tree editable="bottom">
+                                <field name="rap_id" readonly="1" force_save="1" />
+                                <field name="product_id" />
+                                <field name="product_qty" />
+                                <field name="product_uom_category_id" invisible="1" />
+                                <field name="uom_id" domain="[('category_id', '=', product_uom_category_id)]" />
+                                <button name="action_view_items_rap" type="object" icon="fa-pencil-square-o" attrs="{'column_invisible':[('parent.rap_state','=','revisied')]}" />
+                                <button name="action_view_items_rap_revisied" type="object" icon="fa-pencil-square-o" attrs="{'column_invisible':[('parent.rap_state','!=','revisied')]}" />
+
+                            </tree>
+                        </field>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- RAP Component View -->
+        <record id="rap_component_component_view_form" model="ir.ui.view">
+            <field name="name">rap.component.component.view.form</field>
+            <field name="model">component.component</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <header>
+                        <button string="Get Items" name="get_items_rap" type="object" class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <!-- <field name="cost_sheet_id" readonly="1" /> -->
+                            <field name="rap_id" readonly="1" />
+                            <field name="category_id" readonly="1" />
+                            <field name="product_id" readonly="1" />
+                            <field name="rap_state" invisible="1" />
+                        </group>
+                        <field name="item_ids" context="{'default_category_id':parent.category_id,'default_rap_id':parent.rap_id,'default_cost_sheet_id':False}" attrs="{'readonly':['|',('rap_state','!=','draft'),('rap_state','!=','revisied')]}" widget="section_and_note_one2many">
+                            <tree editable="bottom">
+                                <control>
+                                    <create name="add_product_control" string="Add a product"/>
+                                    <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
+                                    <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note'}"/>
+                                </control>
+                                <field name="sequence" widget="handle" />
+                                <field name="display_type" invisible="1"/>
+                                <field name="rap_id" readonly="1" force_save="1" invisible="1" />
+                                <field name="cost_sheet_id" readonly="1" force_save="1" invisible="1" />
+                                <field name="category_id" readonly="1" force_save="1" invisible="1" />
+                                <field name="product_id" attrs="{'required': [('display_type','=',False)]}" />
+                                <field name="product_uom_category_id" invisible="1" />
+                                <field name="name" widget="section_and_note_text" attrs="{'required': [('display_type','!=',False)]}"/>
+                                <field name="uom_id" domain="[('category_id', '=', product_uom_category_id)]" />
+                                <field name="product_qty" />
+                                <field name="existing_price" force_save="1" readonly="1"/>
+                                <field name="rfq_price" force_save="1"/>
+                                <field name="total_price" />
+                                <field name="remarks" />
+                            </tree>
+                        </field>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- RAP Component View In Revisied (add context in item_ids)-->
+        <record id="rap_revisied_component_component_view_form" model="ir.ui.view">
+            <field name="name">rap.revisied.component.component.view.form</field>
+            <field name="model">component.component</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <header>
+                        <button string="Get Items" name="get_items_rap" type="object" class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <!-- <field name="cost_sheet_id" readonly="1" /> -->
+                            <field name="rap_id" readonly="1" />
+                            <field name="category_id" readonly="1" />
+                            <field name="product_id" readonly="1" />
+                            <field name="rap_state" invisible="1" />
+                        </group>
+                        <field name="item_ids" context="{'default_revisied':True,'default_category_id':parent.category_id,'default_cost_sheet_id':False,'default_rap_id':parent.rap_id}" attrs="{'readonly':['|',('rap_state','!=','draft'),('rap_state','!=','revisied')]}" widget="section_and_note_one2many">
+                            <tree editable="bottom">
+                                <control>
+                                    <create name="add_product_control" string="Add a product"/>
+                                    <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
+                                    <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note'}"/>
+                                </control>
+                                <field name="sequence" widget="handle" />
+                                <field name="display_type" invisible="1"/>
+                                <field name="rap_id" readonly="1" force_save="1" invisible="1" />
+                                <field name="cost_sheet_id" readonly="1" force_save="1" invisible="1" />
+                                <field name="category_id" readonly="1" force_save="1" invisible="1" />
+                                <field name="product_id" attrs="{'required': [('display_type','=',False)]}" />
+                                <field name="product_uom_category_id" invisible="1" />
+                                <field name="name" widget="section_and_note_text" attrs="{'required': [('display_type','!=',False)]}"/>
+                                <field name="uom_id" domain="[('category_id', '=', product_uom_category_id)]" />
+                                <field name="product_qty" />
+                                <field name="existing_price" force_save="1" readonly="1"/>
+                                <field name="rfq_price" force_save="1"/>
+                                <field name="total_price" />
+                                <field name="remarks" />
+                            </tree>
+                        </field>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+
+        <record id="cost_sheet_rap_action" model="ir.actions.act_window">
+            <field name="name">RAP</field>
+            <field name="res_model">rap.rap</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <!-- <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                Create a new RAP
+                </p>
+            </field> -->
+        </record>
+
+
+
+
+
+    </data>
+
+
+</odoo>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record id="job_order_seq" model="ir.sequence">
+            <field name="name">Job Order Sequence</field>
+            <field name="code">jor.seqcode</field>
+            <field name="padding">4</field>
+            <field name="prefix">JOR/%(month)s/%(y)s/</field>
+        </record>
+
+        <record id="water_prod_seq" model="ir.sequence">
+            <field name="name">Water production daily sequence</field>
+            <field name="code">wpd.seqcode</field>
+            <field name="padding">4</field>
+            <field name="prefix">WPD/</field>
+            <!-- <field name="prefix">WPD/%(day)s/%(month)s/%(y)s/</field> -->
+        </record>
+
+        <record id="shutdown_system_seq" model="ir.sequence">
+            <field name="name">Shutdown System sequence</field>
+            <field name="code">ss.seq</field>
+            <field name="padding">4</field>
+            <field name="prefix">Trouble/</field>
+            <!-- <field name="prefix">WPD/%(day)s/%(month)s/%(y)s/</field> -->
+        </record>
+
+
+    </data>
+
+
+</odoo>

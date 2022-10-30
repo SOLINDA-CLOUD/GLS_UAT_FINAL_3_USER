@@ -1,0 +1,106 @@
+<odoo>
+    <data>
+
+        <record id="job-order_req_view_form" model="ir.ui.view">
+            <field name="name">job.order.request.view.form</field>
+            <field name="model">job.order.request</field>
+            <field name="arch" type="xml">
+                <form string="Job Order Request">
+                    <header>
+                        <button name="submit_jor" type="object" string="Request" states="draft" class="oe_highlight"/>
+                        <button name="review_jor" type="object" string="Review" states="req" class="oe_highlight" />
+                        <button name="approve_jor" type="object" string="Approve" states="review" class="oe_highlight" />
+                        <button name="set_to_draft" type="object" string="Set To Draft" states="req,review,approve"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,req,review,approve" />
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="create_open_maintenance" style="width: 16%;" class="oe_stat_button" states="req,review,approve" groups="base.group_system,sol_boo.group_spv_mantenance_user" icon="fa-wrench" type="object">
+                                <field name="maintenance_id" widget="statinfo" string="Maintain"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h3>
+                                <field name="name" readonly="1"/>
+                            </h3>
+                        </div>
+
+                        <group>
+                            <field name="warehouse_id" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                            <field name="problem" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                            <field name="root_cause" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                            <field name="action_taken" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                        </group>
+                        <notebook>
+                            <page name="before_maintenance" string="Before Maintenance">
+                                <group col="4">
+                                    <field name="subcontractor_id" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                                    <field name="main_hours" attrs="{'readonly': [('state', '!=', 'draft')]}" widget="float_time"/>
+                                    <field name="before_maintenance_date" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                                </group>
+                                <field name="approval_line" nolabel="1" readonly="1" widget="one2many_list">
+                                    <tree editable="0">
+                                        <field name="type" />
+                                        <field name="user_id"/>
+                                        <field name="date"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="after_maintenance" string="After Maintenance">
+                                <group>
+                                    <group>
+                                        <field name="turned_over_id" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                                        <field name="turned_over_datetime" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                                    </group>
+                                    <group>
+                                        <field name="accepted_id" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                                        <field name="accepted_datetime" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                                    </group>
+                                </group>
+                                <group>
+                                    <field name="note" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- Tree group-->
+        <record id="job_order_view_tree" model="ir.ui.view">
+            <field name="name">job.order.request.view.tree</field>
+            <field name="model">job.order.request</field>
+            <field name="arch" type="xml">
+                <tree string="Job Order Request">
+                    <field name="name"/>
+                    <field name="warehouse_id"/>
+                    <field name="subcontractor_id" />
+                    <field name="turned_over_id" />
+                    <field name="accepted_id" />
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <!-- Action group-->
+        <record id="job_order_req_action" model="ir.actions.act_window">
+            <field name="name">Job Order Request</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">job.order.request</field>
+            <field name="view_mode">tree,form</field>
+            <!-- <field name="domain">[('type','=', 'shift')]</field>
+            <field name="context">{'default_type':'shift'}</field> -->
+        </record>
+
+
+
+    </data>
+</odoo>

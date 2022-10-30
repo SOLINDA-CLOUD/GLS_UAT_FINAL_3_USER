@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <record model="ir.module.category" id="categ_boo_oms">
+            <field name="name">BOO &amp; OMS</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="group_busdev_boo_user" model="res.groups">
+            <field name="name">BOO Busdev</field>
+            <field name="category_id" ref="sol_boo.categ_boo_oms" />
+        </record>
+
+        <record id="group_operator_user" model="res.groups">
+            <field name="name">BOO Operator</field>
+            <field name="category_id" ref="sol_boo.categ_boo_oms" />
+        </record>
+
+        <record id="group_spv_operator_user" model="res.groups">
+            <field name="name">BOO SPV. Operasional</field>
+            <field name="category_id" ref="sol_boo.categ_boo_oms" />
+        </record>
+
+        <record id="group_spv_mantenance_user" model="res.groups">
+            <field name="name">BOO SPV. Maintenance</field>
+            <field name="category_id" ref="sol_boo.categ_boo_oms" />
+        </record>
+
+
+        <record id="group_oms_user" model="res.groups">
+            <field name="name">OMS USER</field>
+            <field name="category_id" ref="sol_boo.categ_boo_oms" />
+        </record>
+
+        <record id="group_oms_user_busdev" model="res.groups">
+            <field name="name">OMS Busdev</field>
+            <field name="category_id" ref="sol_boo.categ_boo_oms" />
+        </record>
+    </data>
+
+
+</odoo>

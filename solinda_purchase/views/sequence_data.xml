@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <record id="purchase_requisition_seq" model="ir.sequence">
+            <field name="name">Purchase Requisition Sequence</field>
+            <field name="code">purchase.requisition.req</field>
+            <field name="padding">5</field>
+            <field name="prefix">RFQ/%(month)s/%(y)s/</field>
+        </record>
+        <record id="purchase_order_seq" model="ir.sequence">
+            <field name="name">Purchase Order Sequence</field>
+            <field name="code">purchase.order.req</field>
+            <field name="padding">5</field>
+            <field name="prefix">PO/%(month)s/%(y)s/</field>
+        </record>
+
+
+    </data>
+
+</odoo>
